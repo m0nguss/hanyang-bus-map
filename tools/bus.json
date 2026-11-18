@@ -5,81 +5,81 @@
     "n": "구의현대2단지 아파트 상가 버스정류장(05163)",
     "t": "7:54",
     "href": "https://naver.me/5dPQwzI1",
+    "how": "busstation",
     "lat": 37.53803,
-    "lng": 127.096862,
-    "how": "busstation"
+    "lng": 127.096862
    },
    {
     "n": "강변스파랜드 주차장입구",
     "t": "7:56",
     "href": "https://naver.me/GWJKdL6M",
+    "how": "place",
     "lat": 37.534963,
-    "lng": 127.091712,
-    "how": "place"
+    "lng": 127.091712
    },
    {
     "n": "성자초등학교 건너편",
     "t": "8:03",
     "href": "https://naver.me/GdyZnlGU",
-    "lat": 37.531618,
-    "lng": 127.082901,
-    "how": "c"
+    "how": "address",
+    "lat": 37.531673,
+    "lng": 127.083043
    },
    {
     "n": "동자초등학교(배스킨라빈스 맞은편)",
     "t": "8:08",
     "href": "https://naver.me/IgTiP1jH",
+    "how": "place",
     "lat": 37.534321,
-    "lng": 127.071485,
-    "how": "place"
+    "lng": 127.071485
    },
    {
     "n": "롯데캐슬리버파크시그니처 정문",
     "t": "8:15",
     "href": "https://naver.me/5qAnVU7d",
+    "how": "place",
     "lat": 37.536994,
-    "lng": 127.062369,
-    "how": "place"
+    "lng": 127.062369
    },
    {
     "n": "원앤원(행운카센터 앞)",
     "t": "8:17",
     "href": "https://naver.me/5Z0zDeM6",
+    "how": "place",
     "lat": 37.538187,
-    "lng": 127.058434,
-    "how": "place"
+    "lng": 127.058434
    },
    {
     "n": "크래프톤 본사(구 성수이마트) 앞 버스정류장(04198)",
     "t": "8:20",
     "href": "https://naver.me/xdfK4CHG",
+    "how": "busstation-shifted",
     "lat": 37.5394,
-    "lng": 127.049228,
-    "how": "busstation"
+    "lng": 127.053391
    },
    {
     "n": "경일초등학교(성수우동 앞)",
     "t": "8:21",
     "href": "https://naver.me/Ggeys18t",
+    "how": "place",
     "lat": 37.540707,
-    "lng": 127.048351,
-    "how": "place"
+    "lng": 127.048351
    },
    {
     "n": "성수도시재생지원센터 앞(한진아파트)",
     "t": "8:22",
     "href": "https://naver.me/56RKn9ol",
+    "how": "place",
     "lat": 37.541422,
-    "lng": 127.046003,
-    "how": "place"
+    "lng": 127.046003
    },
    {
     "n": "성동구민종합체육센터 건너편(멀티커피 서울숲점)",
     "t": "8:25",
     "href": "https://naver.me/Fr76oGEd",
+    "how": "place",
     "lat": 37.54515,
-    "lng": 127.045025,
-    "how": "place"
+    "lng": 127.045025
    }
   ],
   "off": [
@@ -91,9 +91,9 @@
      "2:49"
     ],
     "href": "https://naver.me/FlJuiQ6K",
+    "how": "place",
     "lat": 37.545652,
-    "lng": 127.044656,
-    "how": "place"
+    "lng": 127.044656
    },
    {
     "n": "한진타운아파트 상가(CU편의점, 한사랑교회 앞)",
@@ -103,9 +103,9 @@
      "2:50"
     ],
     "href": "https://naver.me/FzIAGfWO",
+    "how": "place",
     "lat": 37.541233,
-    "lng": 127.045814,
-    "how": "place"
+    "lng": 127.045814
    },
    {
     "n": "경일초등학교(해오름공인중개사 앞)",
@@ -115,9 +115,9 @@
      "2:52"
     ],
     "href": "https://naver.me/xS8F2o6V",
+    "how": "place",
     "lat": 37.540366,
-    "lng": 127.048372,
-    "how": "place"
+    "lng": 127.048372
    },
    {
     "n": "성원중학교(서울숲동물병원 앞)",
@@ -127,9 +127,9 @@
      "2:55"
     ],
     "href": "https://naver.me/5dx94e7x",
+    "how": "est",
     "lat": 37.539263,
-    "lng": 127.052267,
-    "how": "est"
+    "lng": 127.052267
    },
    {
     "n": "원앤원(피자알볼로 앞)",
@@ -139,9 +139,9 @@
      "2:57"
     ],
     "href": "https://naver.me/xeATzKpA",
+    "how": "place",
     "lat": 37.538187,
-    "lng": 127.058434,
-    "how": "place"
+    "lng": 127.058434
    },
    {
     "n": "롯데캐슬리버파크시그니처 정문 맞은편(김밥타운 앞)",
@@ -151,9 +151,9 @@
      "3:00"
     ],
     "href": "https://naver.me/xbLXAOVn",
+    "how": "place",
     "lat": 37.536534,
-    "lng": 127.063195,
-    "how": "place"
+    "lng": 127.063195
    },
    {
     "n": "동자초등학교(이삭토스트 앞)",
@@ -163,9 +163,9 @@
      "3:04"
     ],
     "href": "https://naver.me/xlKSs8xn",
+    "how": "place",
     "lat": 37.534414,
-    "lng": 127.071075,
-    "how": "place"
+    "lng": 127.071075
    },
    {
     "n": "성자초등학교 앞 버스정류장(05562)",
@@ -175,9 +175,9 @@
      "3:08"
     ],
     "href": "https://naver.me/GHV1Hmvw",
+    "how": "busstation",
     "lat": 37.531445,
-    "lng": 127.082391,
-    "how": "busstation"
+    "lng": 127.082391
    },
    {
     "n": "아크로리버아파트 입구",
@@ -187,9 +187,9 @@
      "3:13"
     ],
     "href": "https://naver.me/5jmG49fo",
+    "how": "place",
     "lat": 37.5358,
-    "lng": 127.092458,
-    "how": "place"
+    "lng": 127.092458
    },
    {
     "n": "현대 프라임아파트 버스정류장(05724)",
@@ -199,9 +199,9 @@
      "3:18"
     ],
     "href": "https://naver.me/FYInGLQx",
+    "how": "busstation",
     "lat": 37.538003,
-    "lng": 127.097042,
-    "how": "busstation"
+    "lng": 127.097042
    }
   ]
  },
@@ -211,73 +211,73 @@
     "n": "잠실 파크리오아파트앞 버스정류장(24124)",
     "t": "7:40",
     "href": "https://naver.me/GFYOxdvr",
-    "lat": 37.519619,
-    "lng": 127.105747,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.519526,
+    "lng": 127.109984
    },
    {
     "n": "잠실 장미아파트 A동 상가 버스정류장(24130)",
     "t": "7:42",
     "href": "https://naver.me/GFYOxvdk",
-    "lat": 37.517237,
-    "lng": 127.096917,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.51718,
+    "lng": 127.10103
    },
    {
     "n": "하나은행 구의역지점",
     "t": "7:52",
     "href": "https://naver.me/5MUCqZKs",
+    "how": "place",
     "lat": 37.537993,
-    "lng": 127.083686,
-    "how": "place"
+    "lng": 127.083686
    },
    {
     "n": "광진제일큰약국 앞 버스정류장(05599)",
     "t": "7:53",
     "href": "https://naver.me/5BkJlFid",
+    "how": "busstation",
     "lat": 37.542415,
-    "lng": 127.084282,
-    "how": "busstation"
+    "lng": 127.084282
    },
    {
     "n": "e편한세상광진그랜드파크(현대오일뱅크 맞은편)",
     "t": "7:55",
     "href": "https://naver.me/Fkjno1rS",
+    "how": "place",
     "lat": 37.545242,
-    "lng": 127.080259,
-    "how": "place"
+    "lng": 127.080259
    },
    {
     "n": "왕약국(우리은행 화양동지점 맞은편)",
     "t": "8:12",
     "href": "https://naver.me/x50GEapG",
+    "how": "place",
     "lat": 37.548381,
-    "lng": 127.065601,
-    "how": "place"
+    "lng": 127.065601
    },
    {
     "n": "제인병원",
     "t": "8:15",
     "href": "https://map.naver.com/p/search/%EC%A0%9C%EC%9D%B8%EB%B3%91%EC%9B%90?c=15.00,0,0,0,dh9C%EC%9D%B8%EB%B3%91%EC%9B%90/place/12875547?c=15.30,0,0,0,dh&placePath=%3Fentry%3Dpll",
+    "how": "place",
     "lat": 37.549331,
-    "lng": 127.057014,
-    "how": "place"
+    "lng": 127.057014
    },
    {
     "n": "뚝섬역 2번출구(상원어린이공원, 뚝섬중앙하이츠빌입구)",
     "t": "8:19",
     "href": "https://naver.me/GRmg6WqG",
+    "how": "place",
     "lat": 37.547328,
-    "lng": 127.047626,
-    "how": "place"
+    "lng": 127.047626
    },
    {
     "n": "성동교남단 버스정류장(04185)",
     "t": "8:20",
     "href": "https://naver.me/Gctpz0Hg",
-    "lat": 37.549368,
-    "lng": 127.043605,
-    "how": "busstation"
+    "how": "override",
+    "lat": 37.550099,
+    "lng": 127.044444
    }
   ],
   "off": [
@@ -289,9 +289,9 @@
      "2:50"
     ],
     "href": "https://naver.me/5Fm1ue8X",
+    "how": "place",
     "lat": 37.548735,
-    "lng": 127.044083,
-    "how": "place"
+    "lng": 127.044083
    },
    {
     "n": "뚝섬역 8번출구",
@@ -301,9 +301,9 @@
      "2:57"
     ],
     "href": "https://naver.me/5Fm1ue8X",
-    "lat": 37.548735,
-    "lng": 127.044083,
-    "how": "place"
+    "how": "override",
+    "lat": 37.547472,
+    "lng": 127.046317
    },
    {
     "n": "성수동 그레이닷(GREY.)",
@@ -313,9 +313,9 @@
      "3:02"
     ],
     "href": "https://naver.me/xxxeVfix",
+    "how": "place",
     "lat": 37.549443,
-    "lng": 127.05564,
-    "how": "place"
+    "lng": 127.05564
    },
    {
     "n": "우리은행 화양동지점",
@@ -325,9 +325,9 @@
      "3:04"
     ],
     "href": "https://naver.me/II1SovpH",
+    "how": "place",
     "lat": 37.547941,
-    "lng": 127.065776,
-    "how": "place"
+    "lng": 127.065776
    },
    {
     "n": "e편한세상광진그랜드파크입구",
@@ -337,9 +337,9 @@
      "3:08"
     ],
     "href": "https://naver.me/F5L63v88",
+    "how": "place",
     "lat": 37.545012,
-    "lng": 127.08014,
-    "how": "place"
+    "lng": 127.08014
    },
    {
     "n": "서울광진경찰서(재태크공인중개사 앞)",
@@ -349,9 +349,9 @@
      "3:11"
     ],
     "href": "https://naver.me/GOQXZgCJ",
+    "how": "place",
     "lat": 37.543133,
-    "lng": 127.084302,
-    "how": "place"
+    "lng": 127.084302
    },
    {
     "n": "광진구청 잎 버스정류장(05175)",
@@ -361,9 +361,9 @@
      "3:12"
     ],
     "href": "https://naver.me/GG72P7ZP",
+    "how": "override",
     "lat": 37.539674,
-    "lng": 127.079537,
-    "how": "busstation"
+    "lng": 127.082918
    },
    {
     "n": "잠실중학교, 삼성SDS 앞 버스정류장(24131)",
@@ -373,9 +373,9 @@
      "3:20"
     ],
     "href": "https://naver.me/xXE53KlU",
-    "lat": 37.516634,
-    "lng": 127.095941,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.516632,
+    "lng": 127.1001
    },
    {
     "n": "잠실 래미안아이파크 주출입구",
@@ -385,9 +385,9 @@
      "3:25"
     ],
     "href": "https://naver.me/5iTwRZsf",
+    "how": "place",
     "lat": 37.519692,
-    "lng": 127.112136,
-    "how": "place"
+    "lng": 127.112136
    }
   ]
  },
@@ -397,41 +397,41 @@
     "n": "잠실리센츠아파트 동문",
     "t": "7:50",
     "href": "https://naver.me/xkxhviEP",
+    "how": "place",
     "lat": 37.514412,
-    "lng": 127.091376,
-    "how": "place"
+    "lng": 127.091376
    },
    {
     "n": "서울송파경찰서 교통정보센터",
     "t": "7:54",
     "href": "https://naver.me/FWJ6ZTpY",
+    "how": "place",
     "lat": 37.510645,
-    "lng": 127.092713,
-    "how": "place"
+    "lng": 127.092713
    },
    {
     "n": "잠실트리지움 동문 앞 버스정류장(24150)",
     "t": "7:55",
     "href": "https://naver.me/FLhPY0Ot",
-    "lat": 37.509313,
-    "lng": 127.091529,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.509028,
+    "lng": 127.091934
    },
    {
     "n": "아시아선수촌아파트(스타벅스 잠실본동점)",
     "t": "8:02",
     "href": "https://map.naver.com/p/entry/place/1637556489?lng=127.079491&lat=37.5086445&placePath=%2F&entry=plt&searchType=place&c=15.00,0,0,0,dh",
+    "how": "place",
     "lat": 37.508645,
-    "lng": 127.079491,
-    "how": "url"
+    "lng": 127.079491
    },
    {
     "n": "종합운동장역 6번출구(잠실종합운동장남문 앞)",
     "t": "8:05",
     "href": "https://map.naver.com/p/entry/place/18847214?c=16.33,0,0,0,dh",
+    "how": "place",
     "lat": 37.511361,
-    "lng": 127.073593,
-    "how": "place"
+    "lng": 127.073593
    }
   ],
   "off": [
@@ -443,9 +443,9 @@
      "3:03"
     ],
     "href": "https://naver.me/xkxhviEP",
+    "how": "place",
     "lat": 37.514412,
-    "lng": 127.091376,
-    "how": "place"
+    "lng": 127.091376
    },
    {
     "n": "서울송파경찰서 교통정보센터",
@@ -455,9 +455,9 @@
      "3:06"
     ],
     "href": "https://naver.me/FWJ6ZTpY",
+    "how": "place",
     "lat": 37.510645,
-    "lng": 127.092713,
-    "how": "place"
+    "lng": 127.092713
    },
    {
     "n": "잠실트리지움 동문 앞 버스정류장(24150)",
@@ -467,9 +467,9 @@
      "3:09"
     ],
     "href": "https://naver.me/FLhPY0Ot",
-    "lat": 37.509313,
-    "lng": 127.091529,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.509028,
+    "lng": 127.091934
    },
    {
     "n": "아시아선수촌아파트(부산은행 잠실지점 앞)",
@@ -479,9 +479,9 @@
      "3:15"
     ],
     "href": "https://naver.me/FCbrPOmt",
+    "how": "est",
     "lat": 37.509841,
-    "lng": 127.079042,
-    "how": "est"
+    "lng": 127.079042
    },
    {
     "n": "종합운동장역 6번출구(잠실종합운동장남문 앞)",
@@ -491,9 +491,9 @@
      "3:18"
     ],
     "href": "https://naver.me/Gjdv4G3P",
+    "how": "place",
     "lat": 37.511361,
-    "lng": 127.073593,
-    "how": "place"
+    "lng": 127.073593
    }
   ]
  },
@@ -503,49 +503,49 @@
     "n": "대치현대아파트(현대옥 앞)",
     "t": "7:54",
     "href": "https://naver.me/501eGEgV",
+    "how": "place",
     "lat": 37.501165,
-    "lng": 127.059963,
-    "how": "place"
+    "lng": 127.059963
    },
    {
     "n": "대치포스코더샵아파트(신학철피부과 앞)",
     "t": "8:01",
     "href": "https://naver.me/xQO8Ct7q",
+    "how": "place",
     "lat": 37.504433,
-    "lng": 127.05825,
-    "how": "place"
+    "lng": 127.05825
    },
    {
     "n": "영동농협 삼성로지점(아이갤러리 안경원 앞)",
     "t": "8:07",
     "href": "https://naver.me/Fa3OxMSB",
+    "how": "place",
     "lat": 37.515633,
-    "lng": 127.052239,
-    "how": "place"
+    "lng": 127.052239
    },
    {
     "n": "청담동성당(세라젬 앞)",
     "t": "8:09",
     "href": "https://naver.me/IG6GmIkG",
+    "how": "place",
     "lat": 37.520542,
-    "lng": 127.049622,
-    "how": "place"
+    "lng": 127.049622
    },
    {
     "n": "압구정한양5차아파트정문(52동 앞)",
     "t": "8:13",
     "href": "https://naver.me/GDNDgSDJ",
+    "how": "place",
     "lat": 37.528792,
-    "lng": 127.041236,
-    "how": "place"
+    "lng": 127.041236
    },
    {
     "n": "청담시티빌라트, 목화아파트",
     "t": "8:16",
     "href": "https://naver.me/5wWKo20r",
+    "how": "place",
     "lat": 37.528279,
-    "lng": 127.049677,
-    "how": "place"
+    "lng": 127.049677
    }
   ],
   "off": [
@@ -557,9 +557,9 @@
      "2:59"
     ],
     "href": "https://naver.me/GDNDgSDJ",
+    "how": "place",
     "lat": 37.528792,
-    "lng": 127.041236,
-    "how": "place"
+    "lng": 127.041236
    },
    {
     "n": "청담시티빌라트, 목화아파트",
@@ -569,9 +569,9 @@
      "3:01"
     ],
     "href": "https://naver.me/5wWKo20r",
+    "how": "place",
     "lat": 37.528279,
-    "lng": 127.049677,
-    "how": "place"
+    "lng": 127.049677
    },
    {
     "n": "청담동성당 맞은편(해리슨테일러 앞)",
@@ -581,9 +581,9 @@
      "3:08"
     ],
     "href": "https://naver.me/F9QpB7cD",
+    "how": "place",
     "lat": 37.519992,
-    "lng": 127.049285,
-    "how": "place"
+    "lng": 127.049285
    },
    {
     "n": "래미안라클래시(노브랜드 강남삼성점 앞)",
@@ -593,9 +593,9 @@
      "3:11"
     ],
     "href": "https://naver.me/xRQgKQUz",
+    "how": "place",
     "lat": 37.516302,
-    "lng": 127.051176,
-    "how": "place"
+    "lng": 127.051176
    },
    {
     "n": "대치포스코더샵아파트(파파존스 앞)",
@@ -605,9 +605,9 @@
      "3:16"
     ],
     "href": "https://naver.me/xZGH0eMr",
+    "how": "place",
     "lat": 37.504068,
-    "lng": 127.057881,
-    "how": "place"
+    "lng": 127.057881
    },
    {
     "n": "대치현대아파트 맞은편(GS칼텍스 앞)",
@@ -617,9 +617,9 @@
      "3:18"
     ],
     "href": "https://naver.me/5jAZ4osM",
+    "how": "place",
     "lat": 37.501445,
-    "lng": 127.059088,
-    "how": "place"
+    "lng": 127.059088
    }
   ]
  },
@@ -629,25 +629,25 @@
     "n": "삼성타워팰리스2차GATE3주차장입구",
     "t": "7:54",
     "href": "https://naver.me/xGbBNhh0",
+    "how": "place",
     "lat": 37.489434,
-    "lng": 127.054902,
-    "how": "place"
+    "lng": 127.054902
    },
    {
     "n": "대림아크로빌",
     "t": "7:56",
     "href": "https://naver.me/Fl2sjaSM",
+    "how": "place",
     "lat": 37.487871,
-    "lng": 127.051611,
-    "how": "place"
+    "lng": 127.051611
    },
    {
     "n": "역삼중학교후문",
     "t": "8:09",
     "href": "https://naver.me/xVAVvXUj",
+    "how": "place",
     "lat": 37.495452,
-    "lng": 127.049726,
-    "how": "place"
+    "lng": 127.049726
    }
   ],
   "off": [
@@ -659,9 +659,9 @@
      "3:13"
     ],
     "href": "https://naver.me/xBskcN97",
+    "how": "place",
     "lat": 37.494654,
-    "lng": 127.048948,
-    "how": "place"
+    "lng": 127.048948
    },
    {
     "n": "삼성타워팰리스2차GATE3주차장입구",
@@ -671,9 +671,9 @@
      "3:26"
     ],
     "href": "https://naver.me/xGbBNhh0",
+    "how": "place",
     "lat": 37.489434,
-    "lng": 127.054902,
-    "how": "place"
+    "lng": 127.054902
    },
    {
     "n": "대림아크로빌",
@@ -683,9 +683,9 @@
      "3:27"
     ],
     "href": "https://naver.me/Fl2sjaSM",
+    "how": "place",
     "lat": 37.487871,
-    "lng": 127.051611,
-    "how": "place"
+    "lng": 127.051611
    }
   ]
  },
@@ -695,57 +695,57 @@
     "n": "래미안그레이튼2차아파트 입구",
     "t": "8:06",
     "href": "https://naver.me/x67OOg99",
+    "how": "place",
     "lat": 37.495438,
-    "lng": 127.046462,
-    "how": "place"
+    "lng": 127.046462
    },
    {
     "n": "역삼현대아이파크아파트 입구",
     "t": "8:10",
     "href": "https://naver.me/5EUccPv3",
+    "how": "place",
     "lat": 37.49922,
-    "lng": 127.044654,
-    "how": "place"
+    "lng": 127.044654
    },
    {
     "n": "도곡지구대",
     "t": "8:12",
     "href": "https://naver.me/FlJT6Ru3",
+    "how": "place",
     "lat": 37.501311,
-    "lng": 127.043718,
-    "how": "place"
+    "lng": 127.043718
    },
    {
     "n": "논현동부센트레빌아파트(가나돈까스 앞)",
     "t": "8:15",
     "href": "https://naver.me/5NdqAmfK",
+    "how": "place",
     "lat": 37.509856,
-    "lng": 127.037829,
-    "how": "place"
+    "lng": 127.037829
    },
    {
     "n": "논현로얄팰리스 입구(어반라이트 빌딩 앞)",
     "t": "8:17",
     "href": "https://naver.me/Ffezz4nG",
+    "how": "place",
     "lat": 37.512663,
-    "lng": 127.035777,
-    "how": "place"
+    "lng": 127.035777
    },
    {
     "n": "동현아파트(두산빌딩 앞)",
     "t": "8:19",
     "href": "https://naver.me/FkjSW8zB",
+    "how": "place",
     "lat": 37.518986,
-    "lng": 127.03524,
-    "how": "place"
+    "lng": 127.03524
    },
    {
     "n": "압구정하이츠파크 후문(금수복국 맞은편)",
     "t": "8:21",
     "href": "https://naver.me/xiqTjVhC",
+    "how": "place",
     "lat": 37.524133,
-    "lng": 127.033908,
-    "how": "place"
+    "lng": 127.033908
    }
   ],
   "off": [
@@ -757,9 +757,9 @@
      "3:01"
     ],
     "href": "https://naver.me/5rsMeH9Q",
+    "how": "place",
     "lat": 37.523558,
-    "lng": 127.032787,
-    "how": "place"
+    "lng": 127.032787
    },
    {
     "n": "서울본부세관 입구",
@@ -769,9 +769,9 @@
      "3:03"
     ],
     "href": "https://naver.me/G4WssrcI",
+    "how": "place",
     "lat": 37.518237,
-    "lng": 127.035023,
-    "how": "place"
+    "lng": 127.035023
    },
    {
     "n": "강남지인병원",
@@ -781,9 +781,9 @@
      "3:07"
     ],
     "href": "https://naver.me/xZDOPHGS",
+    "how": "place",
     "lat": 37.5128,
-    "lng": 127.035127,
-    "how": "place"
+    "lng": 127.035127
    },
    {
     "n": "KB국민은행 논현동지점",
@@ -793,9 +793,9 @@
      "3:10"
     ],
     "href": "https://naver.me/GttzrcqY",
+    "how": "place",
     "lat": 37.50909,
-    "lng": 127.03743,
-    "how": "place"
+    "lng": 127.03743
    },
    {
     "n": "역삼자이아파트 맞은편(투썸플레이스 역삼자이점 앞)",
@@ -805,9 +805,9 @@
      "3:13"
     ],
     "href": "https://naver.me/FKxYzR1J",
+    "how": "place",
     "lat": 37.500326,
-    "lng": 127.04357,
-    "how": "place"
+    "lng": 127.04357
    },
    {
     "n": "신한아트홀(아세아공인중개사 앞)",
@@ -817,9 +817,9 @@
      "3:16"
     ],
     "href": "https://naver.me/5h3btqFC",
+    "how": "place",
     "lat": 37.499178,
-    "lng": 127.044095,
-    "how": "place"
+    "lng": 127.044095
    },
    {
     "n": "래미안그레이튼2차아파트 맞은편(등대꽃화원 앞)",
@@ -829,9 +829,9 @@
      "3:21"
     ],
     "href": "https://naver.me/xcKTD35M",
+    "how": "place",
     "lat": 37.495643,
-    "lng": 127.045742,
-    "how": "place"
+    "lng": 127.045742
    }
   ]
  },
@@ -841,25 +841,25 @@
     "n": "반포종합사회복지관 주차장입구",
     "t": "7:59",
     "href": "https://naver.me/xMnSTOrF",
+    "how": "place",
     "lat": 37.509791,
-    "lng": 127.010957,
-    "how": "place"
+    "lng": 127.010957
    },
    {
     "n": "잠원한신아파트 정문(하나유치원 앞)",
     "t": "8:02",
     "href": "https://naver.me/xrPSxrbP",
+    "how": "place",
     "lat": 37.515191,
-    "lng": 127.010326,
-    "how": "place"
+    "lng": 127.010326
    },
    {
     "n": "세븐일레븐 잠원점",
     "t": "8:07",
     "href": "https://naver.me/x1enujot",
+    "how": "place",
     "lat": 37.5199,
-    "lng": 127.014471,
-    "how": "place"
+    "lng": 127.014471
    }
   ],
   "off": [
@@ -871,9 +871,9 @@
      "3:05"
     ],
     "href": "https://naver.me/G65vgnib",
+    "how": "place",
     "lat": 37.52041,
-    "lng": 127.015557,
-    "how": "place"
+    "lng": 127.015557
    },
    {
     "n": "반포종합사회복지관 주차장입구",
@@ -883,9 +883,9 @@
      "3:11"
     ],
     "href": "https://naver.me/xMnSTOrF",
+    "how": "place",
     "lat": 37.509791,
-    "lng": 127.010957,
-    "how": "place"
+    "lng": 127.010957
    },
    {
     "n": "잠원한신아파트 정문(하나유치원 앞)",
@@ -895,9 +895,9 @@
      "3:18"
     ],
     "href": "https://naver.me/xrPSxrbP",
+    "how": "place",
     "lat": 37.515191,
-    "lng": 127.010326,
-    "how": "place"
+    "lng": 127.010326
    }
   ]
  },
@@ -907,33 +907,33 @@
     "n": "행당대림아파트 후문(행복한교회 앞)",
     "t": "8:10",
     "href": "https://naver.me/GsTo75D9",
+    "how": "place",
     "lat": 37.557451,
-    "lng": 127.024879,
-    "how": "place"
+    "lng": 127.024879
    },
    {
     "n": "왕십리풍림아이원 115동 앞 버스정류장(04276)",
     "t": "8:12",
     "href": "https://naver.me/FcuAEL2K",
-    "lat": 37.55907,
-    "lng": 127.019725,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.558924,
+    "lng": 127.023912
    },
    {
     "n": "왕십리자이아파트(왕도교회 앞)",
     "t": "8:13",
     "href": "https://naver.me/Forcul81",
+    "how": "place",
     "lat": 37.560062,
-    "lng": 127.02408,
-    "how": "place"
+    "lng": 127.02408
    },
    {
     "n": "왕십리뉴타운아파트3주차장입구(센트라스126동 앞)",
     "t": "8:22",
     "href": "https://naver.me/GXkTr6PF",
+    "how": "place",
     "lat": 37.567307,
-    "lng": 127.026445,
-    "how": "place"
+    "lng": 127.026445
    }
   ],
   "off": [
@@ -945,9 +945,9 @@
      "2:54"
     ],
     "href": "https://naver.me/5VThzH95",
+    "how": "est",
     "lat": 37.568846,
-    "lng": 127.024402,
-    "how": "est"
+    "lng": 127.024402
    },
    {
     "n": "왕십리자이, 신당현대아파트 버스정류장(04289)",
@@ -957,9 +957,9 @@
      "2:58"
     ],
     "href": "https://naver.me/Ftu4Jqut",
+    "how": "busstation-shifted",
     "lat": 37.560781,
-    "lng": 127.019495,
-    "how": "busstation"
+    "lng": 127.023658
    },
    {
     "n": "극동, 풍림아이원 버스정류장(04658)",
@@ -969,9 +969,9 @@
      "2:59"
     ],
     "href": "https://naver.me/xguFI3xq",
+    "how": "busstation-shifted",
     "lat": 37.559053,
-    "lng": 127.019461,
-    "how": "busstation"
+    "lng": 127.023624
    },
    {
     "n": "행복한교회 맞은편 버스정류장(04669)",
@@ -981,9 +981,9 @@
      "3:00"
     ],
     "href": "https://naver.me/5ui8H2nv",
+    "how": "busstation",
     "lat": 37.557444,
-    "lng": 127.02379,
-    "how": "busstation"
+    "lng": 127.02379
    }
   ]
  },
@@ -993,65 +993,65 @@
     "n": "한남더힐아파트 119동 앞 공항버스정류장(03749)",
     "t": "8:00",
     "href": "https://naver.me/GTePXkJM",
+    "how": "est",
     "lat": 37.536262,
-    "lng": 127.007174,
-    "how": "busstation"
+    "lng": 127.007174
    },
    {
     "n": "한남하이츠아파트 앞 버스정류장(04527)",
     "t": "8:05",
     "href": "https://naver.me/5MS0yYNi",
+    "how": "busstation",
     "lat": 37.540265,
-    "lng": 127.011594,
-    "how": "busstation"
+    "lng": 127.011594
    },
    {
     "n": "옥수극동아파트(블루클럽 앞)",
     "t": "8:06",
     "href": "https://naver.me/xDsdxWYu",
+    "how": "place",
     "lat": 37.5426,
-    "lng": 127.012525,
-    "how": "place"
+    "lng": 127.012525
    },
    {
     "n": "옥수리버젠아파트, 건강미소약국 앞 버스정류장(04805)",
     "t": "8:08",
     "href": "https://naver.me/FC4aEf7i",
+    "how": "busstation",
     "lat": 37.543856,
-    "lng": 127.015136,
-    "how": "busstation"
+    "lng": 127.015136
    },
    {
     "n": "금호동대우아파트 상가앞 공항버스정류장(04786)",
     "t": "8:11",
     "href": "https://naver.me/xdfgXhNp",
+    "how": "busstation-shifted",
     "lat": 37.546471,
-    "lng": 127.014706,
-    "how": "busstation"
+    "lng": 127.018868
    },
    {
     "n": "응봉현대아파트 앞 공항버스정류장(04792)",
     "t": "8:14",
     "href": "https://naver.me/FkjSGHmt",
+    "how": "busstation-shifted",
     "lat": 37.549805,
-    "lng": 127.026503,
-    "how": "busstation"
+    "lng": 127.030666
    },
    {
     "n": "응봉동주민센터",
     "t": "8:15",
     "href": "https://naver.me/G8UsKEr8",
+    "how": "place",
     "lat": 37.553164,
-    "lng": 127.033436,
-    "how": "place"
+    "lng": 127.033436
    },
    {
     "n": "대림강변타운아파트입구",
     "t": "8:16",
     "href": "https://naver.me/5EWBQYUX",
+    "how": "place",
     "lat": 37.554772,
-    "lng": 127.035709,
-    "how": "place"
+    "lng": 127.035709
    }
   ],
   "off": [
@@ -1063,9 +1063,9 @@
      "2:50"
     ],
     "href": "https://naver.me/FBJjVP6F",
+    "how": "busstation",
     "lat": 37.554692,
-    "lng": 127.034349,
-    "how": "busstation"
+    "lng": 127.034349
    },
    {
     "n": "응봉대림2차아파트 정문 앞 공항버스정류장(04795)",
@@ -1075,9 +1075,9 @@
      "2:51"
     ],
     "href": "https://naver.me/xGmpLJNW",
+    "how": "busstation-shifted",
     "lat": 37.553988,
-    "lng": 127.029376,
-    "how": "busstation"
+    "lng": 127.033538
    },
    {
     "n": "응봉현대아파트(MG새마을금고 응봉지점 앞)",
@@ -1087,9 +1087,9 @@
      "2:52"
     ],
     "href": "https://naver.me/56Yfu5Mn",
+    "how": "est",
     "lat": 37.551045,
-    "lng": 127.031034,
-    "how": "est"
+    "lng": 127.031034
    },
    {
     "n": "금옥초등학교 앞 공항버스정류장(04787)",
@@ -1099,9 +1099,9 @@
      "2:57"
     ],
     "href": "https://naver.me/FTqhtBaS",
+    "how": "busstation",
     "lat": 37.546597,
-    "lng": 127.018732,
-    "how": "busstation"
+    "lng": 127.018732
    },
    {
     "n": "래미안옥수리버젠아파트(리버젠힐부동산 앞)",
@@ -1111,9 +1111,9 @@
      "2:59"
     ],
     "href": "https://naver.me/FrKgpKph",
+    "how": "place",
     "lat": 37.544346,
-    "lng": 127.015402,
-    "how": "place"
+    "lng": 127.015402
    },
    {
     "n": "옥수극동아파트(KB국민은행 옥수동지점 앞)",
@@ -1123,9 +1123,9 @@
      "3:01"
     ],
     "href": "https://naver.me/x8lOR99Z",
+    "how": "place",
     "lat": 37.542611,
-    "lng": 127.011997,
-    "how": "place"
+    "lng": 127.011997
    },
    {
     "n": "극동그린아파트 앞 공항버스정류장(04783)",
@@ -1135,9 +1135,9 @@
      "3:03"
     ],
     "href": "https://naver.me/5HtfKVSu",
+    "how": "busstation-shifted",
     "lat": 37.540962,
-    "lng": 127.006821,
-    "how": "busstation"
+    "lng": 127.010984
    },
    {
     "n": "한남더힐아파트 119동 앞 공항버스정류장(03749)",
@@ -1147,9 +1147,9 @@
      "3:07"
     ],
     "href": "https://naver.me/GTePXkJM",
+    "how": "est",
     "lat": 37.536262,
-    "lng": 127.007174,
-    "how": "busstation"
+    "lng": 127.007174
    }
   ]
  },
@@ -1159,49 +1159,49 @@
     "n": "대치동부센트레빌아파트(대도초등학교후문 맞은편)",
     "t": "7:58",
     "href": "https://naver.me/5duHn91X",
+    "how": "place",
     "lat": 37.492795,
-    "lng": 127.054691,
-    "how": "place"
+    "lng": 127.054691
    },
    {
     "n": "대치아이파크아파트 정문",
     "t": "8:00",
     "href": "https://naver.me/GsTIfKrh",
+    "how": "place",
     "lat": 37.4951,
-    "lng": 127.053684,
-    "how": "place"
+    "lng": 127.053684
    },
    {
     "n": "남서울상가",
     "t": "8:04",
     "href": "https://naver.me/5GyajpwO",
+    "how": "place",
     "lat": 37.499024,
-    "lng": 127.051876,
-    "how": "place"
+    "lng": 127.051876
    },
    {
     "n": "강남더드림병원 앞 버스정류장(23883)",
     "t": "8:06",
     "href": "https://naver.me/GnvLZ0Xo",
+    "how": "busstation-shifted",
     "lat": 37.50097,
-    "lng": 127.046673,
-    "how": "busstation"
+    "lng": 127.050836
    },
    {
     "n": "영동고등학교 정문",
     "t": "8:17",
     "href": "https://naver.me/FgHClFic",
+    "how": "place",
     "lat": 37.520822,
-    "lng": 127.040131,
-    "how": "place"
+    "lng": 127.040131
    },
    {
     "n": "압구정파출소",
     "t": "8:21",
     "href": "https://naver.me/FArRMJFH",
+    "how": "place",
     "lat": 37.529316,
-    "lng": 127.035617,
-    "how": "place"
+    "lng": 127.035617
    }
   ],
   "off": [
@@ -1213,9 +1213,9 @@
      "2:58"
     ],
     "href": "https://naver.me/xXDKEqpt",
+    "how": "place",
     "lat": 37.528829,
-    "lng": 127.035538,
-    "how": "place"
+    "lng": 127.035538
    },
    {
     "n": "영동고등학교 정문 맞은편",
@@ -1225,9 +1225,9 @@
      "3:06"
     ],
     "href": "https://naver.me/FXZbcH06",
+    "how": "place",
     "lat": 37.520647,
-    "lng": 127.039772,
-    "how": "place"
+    "lng": 127.039772
    },
    {
     "n": "역삼e-편한세상아파트 앞 버스정류장(23308)",
@@ -1237,9 +1237,9 @@
      "3:23"
     ],
     "href": "https://naver.me/GKxX8H2k",
-    "lat": 37.499313,
-    "lng": 127.047121,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.499254,
+    "lng": 127.051298
    },
    {
     "n": "도곡렉슬아파트(도곡렉슬유치원 앞)",
@@ -1249,9 +1249,9 @@
      "3:29"
     ],
     "href": "https://naver.me/GyLooVNv",
+    "how": "place",
     "lat": 37.4945,
-    "lng": 127.053532,
-    "how": "place"
+    "lng": 127.053532
    },
    {
     "n": "대도초등학교 후문",
@@ -1261,9 +1261,9 @@
      "3:31"
     ],
     "href": "https://naver.me/xwmiUDuy",
+    "how": "place",
     "lat": 37.493268,
-    "lng": 127.054146,
-    "how": "place"
+    "lng": 127.054146
    }
   ]
  },
@@ -1273,33 +1273,33 @@
     "n": "은마아파트 18동 맞은편(라화쿵부 앞)",
     "t": "7:53",
     "href": "https://naver.me/G6DOSER8",
+    "how": "place",
     "lat": 37.497362,
-    "lng": 127.061442,
-    "how": "place"
+    "lng": 127.061442
    },
    {
     "n": "대곡초등학교 정문(신한은행 대치역지점 앞)",
     "t": "7:58",
     "href": "https://naver.me/FHY1eOMk",
+    "how": "place",
     "lat": 37.495051,
-    "lng": 127.065714,
-    "how": "place"
+    "lng": 127.065714
    },
    {
     "n": "대치쌍용1차아파트 정문",
     "t": "8:01",
     "href": "https://naver.me/GdVsbXtV",
+    "how": "place",
     "lat": 37.497833,
-    "lng": 127.069637,
-    "how": "place"
+    "lng": 127.069637
    },
    {
     "n": "주식회사오뚜기 앞 버스정류장(23511)",
     "t": "8:03",
     "href": "https://naver.me/xlCcoN8j",
-    "lat": 37.501942,
-    "lng": 127.063187,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.501862,
+    "lng": 127.067315
    }
   ],
   "off": [
@@ -1311,9 +1311,9 @@
      "3:16"
     ],
     "href": "https://naver.me/FvFA3RuW",
-    "lat": 37.501778,
-    "lng": 127.062438,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.501868,
+    "lng": 127.066618
    },
    {
     "n": "은마아파트 8동(스타벅스 학여울역점 앞)",
@@ -1323,9 +1323,9 @@
      "3:18"
     ],
     "href": "https://naver.me/GbEcFlU1",
+    "how": "place",
     "lat": 37.498036,
-    "lng": 127.068494,
-    "how": "place"
+    "lng": 127.068494
    },
    {
     "n": "은마아파드 2동 앞 버스정류장(23237)",
@@ -1335,9 +1335,9 @@
      "3:21"
     ],
     "href": "https://naver.me/5c2XoNdn",
-    "lat": 37.495744,
-    "lng": 127.067205,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.495754,
+    "lng": 127.066981
    },
    {
     "n": "은마아파트 서문(19동 앞)",
@@ -1347,9 +1347,9 @@
      "3:23"
     ],
     "href": "https://naver.me/5AqtfhoH",
+    "how": "place",
     "lat": 37.497018,
-    "lng": 127.062156,
-    "how": "place"
+    "lng": 127.062156
    }
   ]
  },
@@ -1359,41 +1359,41 @@
     "n": "맘스터치 삼성중앙점 앞 버스정류장(23210)",
     "t": "7:58",
     "href": "https://naver.me/F8Kus7eQ",
+    "how": "place",
     "lat": 37.512762,
-    "lng": 127.051488,
-    "how": "place"
+    "lng": 127.051488
    },
    {
     "n": "강남구보건소(뚜레쥬르 앞)",
     "t": "8:04",
     "href": "https://naver.me/GSiH7qL8",
+    "how": "place",
     "lat": 37.515803,
-    "lng": 127.042038,
-    "how": "place"
+    "lng": 127.042038
    },
    {
     "n": "석탑아파트(하나로마트 청담점 맞은편)",
     "t": "8:08",
     "href": "https://naver.me/59eJJuMq",
+    "how": "place",
     "lat": 37.517529,
-    "lng": 127.044383,
-    "how": "place"
+    "lng": 127.044383
    },
    {
     "n": "청담삼성진흥아파트 상가(귀신반점 앞)",
     "t": "8:11",
     "href": "https://naver.me/xPIpAvSu",
+    "how": "place",
     "lat": 37.519126,
-    "lng": 127.052914,
-    "how": "place"
+    "lng": 127.052914
    },
    {
     "n": "청담 제일정형외과병원",
     "t": "8:14",
     "href": "https://naver.me/IxD7vvUb",
+    "how": "place",
     "lat": 37.522822,
-    "lng": 127.056079,
-    "how": "place"
+    "lng": 127.056079
    }
   ],
   "off": [
@@ -1405,9 +1405,9 @@
      "3:07"
     ],
     "href": "https://naver.me/5lZfdQV9",
+    "how": "place",
     "lat": 37.523145,
-    "lng": 127.054809,
-    "how": "place"
+    "lng": 127.054809
    },
    {
     "n": "청담삼성진흥아파트(우리생협 오아시스 앞)",
@@ -1417,9 +1417,9 @@
      "3:12"
     ],
     "href": "https://naver.me/x0GkHyUG",
+    "how": "place",
     "lat": 37.519482,
-    "lng": 127.052686,
-    "how": "place"
+    "lng": 127.052686
    },
    {
     "n": "하나로마트 농협청담점",
@@ -1429,9 +1429,9 @@
      "3:16"
     ],
     "href": "https://naver.me/GsTjyZ5V",
+    "how": "place",
     "lat": 37.518068,
-    "lng": 127.044616,
-    "how": "place"
+    "lng": 127.044616
    },
    {
     "n": "강남구보건소 맞은편(맥도날드 앞)",
@@ -1441,9 +1441,9 @@
      "3:18"
     ],
     "href": "https://naver.me/5BvimcrS",
+    "how": "place",
     "lat": 37.516289,
-    "lng": 127.041407,
-    "how": "place"
+    "lng": 127.041407
    },
    {
     "n": "쌍용플래티넘아파트(삼성피트니스클럽 앞)",
@@ -1453,9 +1453,9 @@
      "3:26"
     ],
     "href": "https://naver.me/xAtWhen9",
+    "how": "place",
     "lat": 37.512256,
-    "lng": 127.051478,
-    "how": "place"
+    "lng": 127.051478
    }
   ]
  },
@@ -1465,49 +1465,49 @@
     "n": "압구정신현대아파트 116동 입구",
     "t": "8:07",
     "href": "https://naver.me/GtUmhnOx",
+    "how": "place",
     "lat": 37.529894,
-    "lng": 127.023711,
-    "how": "place"
+    "lng": 127.023711
    },
    {
     "n": "압구정신현대아파트 113동 입구",
     "t": "8:08",
     "href": "https://naver.me/Gz5jQyQl",
+    "how": "place",
     "lat": 37.52789,
-    "lng": 127.022238,
-    "how": "place"
+    "lng": 127.022238
    },
    {
     "n": "신사중학교(미성1차아파트 후문)",
     "t": "8:10",
     "href": "https://naver.me/5huVxbto",
+    "how": "place",
     "lat": 37.525152,
-    "lng": 127.021487,
-    "how": "place"
+    "lng": 127.021487
    },
    {
     "n": "압구정현대아파트 80동 입구",
     "t": "8:13",
     "href": "https://naver.me/F7yvBohs",
+    "how": "place",
     "lat": 37.528286,
-    "lng": 127.028435,
-    "how": "place"
+    "lng": 127.028435
    },
    {
     "n": "압구정현대아파트 75동 입구",
     "t": "8:14",
     "href": "https://naver.me/xwmiUruX",
+    "how": "place",
     "lat": 37.530419,
-    "lng": 127.02784,
-    "how": "place"
+    "lng": 127.02784
    },
    {
     "n": "압구정현대5차아파트 정문",
     "t": "8:16",
     "href": "https://naver.me/xtgXOIa5",
+    "how": "place",
     "lat": 37.531839,
-    "lng": 127.02746,
-    "how": "place"
+    "lng": 127.02746
    }
   ],
   "off": [
@@ -1519,9 +1519,9 @@
      "3:02"
     ],
     "href": "https://naver.me/GudI5RFR",
-    "lat": 37.528458,
-    "lng": 127.026349,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.528438,
+    "lng": 127.030581
    },
    {
     "n": "압구정현대아파트 80동 입구",
@@ -1531,9 +1531,9 @@
      "3:04"
     ],
     "href": "https://naver.me/F7yvBohs",
+    "how": "place",
     "lat": 37.528286,
-    "lng": 127.028435,
-    "how": "place"
+    "lng": 127.028435
    },
    {
     "n": "압구정현대아파트 75동 입구",
@@ -1543,9 +1543,9 @@
      "3:05"
     ],
     "href": "https://naver.me/xwmiUruX",
+    "how": "place",
     "lat": 37.530419,
-    "lng": 127.02784,
-    "how": "place"
+    "lng": 127.02784
    },
    {
     "n": "압구정현대5차아파트 정문",
@@ -1555,9 +1555,9 @@
      "3:07"
     ],
     "href": "https://naver.me/xtgXOIa5",
+    "how": "place",
     "lat": 37.531839,
-    "lng": 127.02746,
-    "how": "place"
+    "lng": 127.02746
    },
    {
     "n": "압구정신현대아파트 116동 입구",
@@ -1567,9 +1567,9 @@
      "3:10"
     ],
     "href": "https://naver.me/GtUmhnOx",
+    "how": "place",
     "lat": 37.529894,
-    "lng": 127.023711,
-    "how": "place"
+    "lng": 127.023711
    },
    {
     "n": "압구정신현대아파트 113동 입구",
@@ -1579,9 +1579,9 @@
      "3:11"
     ],
     "href": "https://naver.me/Gz5jQyQl",
+    "how": "place",
     "lat": 37.52789,
-    "lng": 127.022238,
-    "how": "place"
+    "lng": 127.022238
    },
    {
     "n": "신사중학교(미성1차아파트 후문)",
@@ -1591,9 +1591,9 @@
      "3:13"
     ],
     "href": "https://naver.me/5huVxbto",
+    "how": "place",
     "lat": 37.525152,
-    "lng": 127.021487,
-    "how": "place"
+    "lng": 127.021487
    }
   ]
  },
@@ -1603,41 +1603,41 @@
     "n": "서울숲푸르지오아파트 마을버스정류장(04848)",
     "t": "8:05",
     "href": "https://naver.me/xHDM53GO",
+    "how": "busstation-shifted",
     "lat": 37.545078,
-    "lng": 127.019423,
-    "how": "busstation"
+    "lng": 127.023586
    },
    {
     "n": "힐스테이트서울숲리버 버스정류장(04517)",
     "t": "8:08",
     "href": "https://naver.me/xNmZkbcs",
+    "how": "busstation-shifted",
     "lat": 37.54674,
-    "lng": 127.021292,
-    "how": "busstation"
+    "lng": 127.025455
    },
    {
     "n": "금호 삼성래미안(새마을금고 성동중앙)",
     "t": "8:14",
     "href": "https://map.naver.com/p/entry/place/1443810266?c=17.79,0,0,0,dh",
+    "how": "place",
     "lat": 37.551458,
-    "lng": 127.025809,
-    "how": "place"
+    "lng": 127.025809
    },
    {
     "n": "논골사거리 버스정류장(04554)",
     "t": "8:16",
     "href": "https://naver.me/FvFroh2L",
+    "how": "busstation-shifted",
     "lat": 37.555351,
-    "lng": 127.020721,
-    "how": "busstation"
+    "lng": 127.024884
    },
    {
     "n": "한양대학교 앞, 한양시장 버스정류장(04127)",
     "t": "8:23",
     "href": "https://naver.me/5DZgwsx4",
-    "lat": 37.558177,
-    "lng": 127.040338,
-    "how": "decoded"
+    "how": "osm-ars",
+    "lat": 37.558794,
+    "lng": 127.040923
    }
   ],
   "off": [
@@ -1649,9 +1649,9 @@
      "2:48"
     ],
     "href": "https://naver.me/xxodrHIV",
+    "how": "pin",
     "lat": 37.556807,
-    "lng": 127.041002,
-    "how": "decoded"
+    "lng": 127.041002
    },
    {
     "n": "e편한세상 114동 앞 버스정류장(04591)",
@@ -1661,9 +1661,9 @@
      "2:55"
     ],
     "href": "https://naver.me/xuiKzryE",
+    "how": "busstation-shifted",
     "lat": 37.555231,
-    "lng": 127.020439,
-    "how": "busstation"
+    "lng": 127.024602
    },
    {
     "n": "래미안금호하이리버 버스정류장(04150)",
@@ -1673,9 +1673,9 @@
      "2:57"
     ],
     "href": "https://naver.me/5c2OSz9x",
+    "how": "busstation",
     "lat": 37.551478,
-    "lng": 127.024889,
-    "how": "busstation"
+    "lng": 127.024889
    },
    {
     "n": "GS주유소 앞 버스정류장(04697)",
@@ -1685,9 +1685,9 @@
      "3:00"
     ],
     "href": "https://naver.me/FDjC4ETJ",
+    "how": "busstation",
     "lat": 37.546981,
-    "lng": 127.025293,
-    "how": "busstation"
+    "lng": 127.025293
    },
    {
     "n": "서울숲푸르지오아파트 마을버스정류장(04848)",
@@ -1697,9 +1697,9 @@
      "3:02"
     ],
     "href": "https://naver.me/xHDM53GO",
+    "how": "busstation-shifted",
     "lat": 37.545078,
-    "lng": 127.019423,
-    "how": "busstation"
+    "lng": 127.023586
    }
   ]
  },
@@ -1709,41 +1709,41 @@
     "n": "신천중학교(잠실엘스아파트 147동 앞)",
     "t": "7:49",
     "href": "https://naver.me/FqWAQhuW",
+    "how": "place",
     "lat": 37.516301,
-    "lng": 127.079469,
-    "how": "place"
+    "lng": 127.079469
    },
    {
     "n": "잠실엘스아파트 145동 앞",
     "t": "7:50",
     "href": "https://naver.me/FxF6WYVo",
+    "how": "place",
     "lat": 37.516163,
-    "lng": 127.081356,
-    "how": "place"
+    "lng": 127.081356
    },
    {
     "n": "잠실리센츠아파트 북1문",
     "t": "7:52",
     "href": "https://naver.me/5r90IgS3",
+    "how": "place",
     "lat": 37.516221,
-    "lng": 127.085263,
-    "how": "place"
+    "lng": 127.085263
    },
    {
     "n": "봉은사역 3번출구 앞 버스정류장(23192)",
     "t": "8:09",
     "href": "https://naver.me/G1wNOht5",
-    "lat": 37.51538,
-    "lng": 127.051818,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.515083,
+    "lng": 127.060057
    },
    {
     "n": "삼성동 현대아이파크아파트 입구",
     "t": "8:11",
     "href": "https://naver.me/xk1GXTL3",
+    "how": "place",
     "lat": 37.518698,
-    "lng": 127.058233,
-    "how": "place"
+    "lng": 127.058233
    }
   ],
   "off": [
@@ -1755,9 +1755,9 @@
      "3:03"
     ],
     "href": "https://naver.me/xMjftl57",
-    "lat": 37.520664,
-    "lng": 127.055465,
-    "how": "busstation"
+    "how": "osm-ars",
+    "lat": 37.520853,
+    "lng": 127.056262
    },
    {
     "n": "봉은사역 5번출구",
@@ -1767,9 +1767,9 @@
      "3:10"
     ],
     "href": "https://naver.me/xuc1SZWo",
+    "how": "place",
     "lat": 37.514227,
-    "lng": 127.061062,
-    "how": "place"
+    "lng": 127.061062
    },
    {
     "n": "신천중학교(잠실엘스아파트 147동 앞)",
@@ -1779,9 +1779,9 @@
      "3:16"
     ],
     "href": "https://naver.me/FqWAQhuW",
+    "how": "place",
     "lat": 37.516301,
-    "lng": 127.079469,
-    "how": "place"
+    "lng": 127.079469
    },
    {
     "n": "잠실엘스아파트 145동",
@@ -1791,9 +1791,9 @@
      "3:17"
     ],
     "href": "https://naver.me/FxF6WYVo",
+    "how": "place",
     "lat": 37.516163,
-    "lng": 127.081356,
-    "how": "place"
+    "lng": 127.081356
    },
    {
     "n": "잠실리센츠아파트 북1문",
@@ -1803,9 +1803,9 @@
      "3:19"
     ],
     "href": "https://naver.me/5r90IgS3",
+    "how": "place",
     "lat": 37.516221,
-    "lng": 127.085263,
-    "how": "place"
+    "lng": 127.085263
    }
   ]
  }

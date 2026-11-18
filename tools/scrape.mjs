@@ -25,23 +25,36 @@ async function resolve(href) {
     url = new URL(loc, url).href;
   }
   const u = new URL(url), qs = u.searchParams;
-  if (qs.get("lat") && qs.get("lng")) return { lat: +qs.get("lat"), lng: +qs.get("lng"), how: "url", url };
+  // c = map center "x,y,zoom,...". It is the map view when the link was shared, NOT the pin, so it is the last resort.
   const c = (qs.get("c") || "").split(",");
-  if (/\/bus-station\//.test(url) && +c[0] > 1000) { const [lat, lng] = merc2ll(+c[0], +c[1]); return { lat, lng, how: "busstation", url }; }
-  // /p/entry/coordinates/<lng>,<lat>: base62 (0-9a-zA-Z), value - 2e9 = degrees * 1e7
-  const enc = url.match(/\/coordinates\/([0-9A-Za-z]+),([0-9A-Za-z]+)/) || (qs.get("c") || "").match(/^([0-9A-Za-z]{5,}),([0-9A-Za-z]{5,}),/);
-  if (enc && !/^\d+(\.\d+)?$/.test(enc[1])) {
-    const B = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const d = s => ([...s].reduce((n, ch) => n * 62 + B.indexOf(ch), 0) - 2e9) / 1e7;
-    if (!/\/place\//.test(url) || /\/coordinates\//.test(url)) return { lat: d(enc[2]), lng: d(enc[1]), how: "decoded", url };
+  const z = +c[2] || null;
+  // base62 (0-9a-zA-Z) compact coordinates: value - 2e9 = degrees * 1e7
+  const B = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const b62 = s => ([...s].reduce((n, ch) => n * 62 + B.indexOf(ch), 0) - 2e9) / 1e7;
+  const isB62 = s => /^[0-9A-Za-z]{5,}$/.test(s || "") && !/^\d+$/.test(s);
+  // Exact pins: /address/<x>,<y> (EPSG:3857 meters) and /coordinates/<lng>,<lat> (base62)
+  let m = url.match(/\/address\/(\d+\.\d+),(\d+\.\d+)/);
+  if (m) { const [lat, lng] = merc2ll(+m[1], +m[2]); return { lat, lng, how: "address", url }; }
+  m = url.match(/\/coordinates\/([0-9A-Za-z]+),([0-9A-Za-z]+)/);
+  if (m) return { lat: b62(m[2]), lng: b62(m[1]), how: "pin", url };
+  if (/\/bus-station\//.test(url)) {
+    if (+c[0] > 1000) { const [lat, lng] = merc2ll(+c[0], +c[1]); return { lat, lng, z, how: "busstation", url }; }
+    if (isB62(c[0])) return { lat: b62(c[1]), lng: b62(c[0]), z, how: "busstation", url };
   }
   const pid = (url.match(/\/place\/(\d+)/) || [])[1] || qs.get("id");
   if (pid) {
-    const h = await (await fetch(`https://m.place.naver.com/place/${pid}/home`, { headers: { "User-Agent": UA } })).text();
-    const m = h.match(/"coordinate":\{"__typename":"Coordinate","x":"([\d.]+)","y":"([\d.]+)"/);
-    if (m) return { lat: +m[2], lng: +m[1], how: "place", url, pid };
+    // Naver throttles after many requests and then serves a page without data: retry with backoff.
+    for (let attempt = 0; attempt < 4; attempt++) {
+      if (attempt) await new Promise(r => setTimeout(r, 4000 * attempt));
+      const h = await (await fetch(`https://m.place.naver.com/place/${pid}/home`, { headers: { "User-Agent": UA } })).text();
+      m = h.match(/"coordinate":\{"__typename":"Coordinate","x":"([\d.]+)","y":"([\d.]+)"/);
+      if (m) return { lat: +m[2], lng: +m[1], how: "place", url, pid };
+      if (!/PlaceDetailBase/.test(h) && attempt === 0) continue;   // throttled shell page
+      if (/PlaceDetailBase/.test(h)) break;                          // real page without coordinates
+    }
   }
-  if (+c[0] > 1000) { const [lat, lng] = merc2ll(+c[0], +c[1]); return { lat, lng, how: "c", url }; }
+  if (qs.get("lat") && qs.get("lng")) return { lat: +qs.get("lat"), lng: +qs.get("lng"), how: "url", url };
+  if (+c[0] > 1000) { const [lat, lng] = merc2ll(+c[0], +c[1]); return { lat, lng, z, how: "center", url }; }
   return { lat: null, lng: null, how: "fail", url };
 }
 
@@ -58,9 +71,18 @@ for (let b = 1; b <= 15; b++) {
 }
 const hrefs = [...new Set(Object.values(courses).flatMap(c => [...c.on, ...c.off].map(s => s.href)))];
 const res = {};
-for (let i = 0; i < hrefs.length; i += 6) {
-  await Promise.all(hrefs.slice(i, i + 6).map(async h => { try { res[h] = await resolve(h); } catch (e) { res[h] = { how: "fail", err: String(e) }; } }));
+for (let i = 0; i < hrefs.length; i += 3) {
+  await Promise.all(hrefs.slice(i, i + 3).map(async h => { try { res[h] = await resolve(h); } catch (e) { res[h] = { how: "fail", err: String(e) }; } }));
 }
+// When Naver throttles a place page, reuse that link's place coordinates from the previous run (places don't move).
+let prev = {};
+try { prev = JSON.parse(fs.readFileSync(OUT, "utf8")); } catch {}
+const cache = {};
+for (const c of Object.values(prev)) for (const s of [...(c.on || []), ...(c.off || [])])
+  if (/^place/.test(s.how) && s.lat) cache[s.href] = [s.lat, s.lng];
+let cached = 0;
+for (const h of hrefs) if (res[h].how === "fail" && cache[h]) { [res[h].lat, res[h].lng] = cache[h]; res[h].how = "place-cached"; cached++; }
+if (cached) console.log(`place pages throttled: reused ${cached} coordinates from the previous ${OUT}`);
 // Naver place pages that don't expose coordinates to a plain fetch: OSM (Nominatim) positions, shown as approximate.
 const FALLBACK = {
   "성원중학교(서울숲동물병원 앞)": [37.539263, 127.052267],
@@ -68,9 +90,33 @@ const FALLBACK = {
   "왕십리뉴타운텐즈힐1단지(GS편의점 앞)": [37.568846, 127.024402],
   "응봉현대아파트(MG새마을금고 응봉지점 앞)": [37.551045, 127.031034],
 };
+// Bus-station links only carry the map center. Shared from desktop Naver Map at the default zoom (15, or 14),
+// the center sits 97 px west of the station because of the left side panel; shift it back.
+// Checked 2026-11-18 against OSM bus stops with the same ARS number: 11 of 11 default-zoom links were 96-99 px west.
+const PANEL_SHIFT_PX = 97;
+// Default-zoom links that were shared without the panel (raw center already matches the stop).
+const NO_SHIFT = new Set(["구의현대2단지 아파트 상가 버스정류장(05163)", "현대 프라임아파트 버스정류장(05724)", "금옥초등학교 앞 공항버스정류장(04787)"]);
+// Verified positions (2026-11-18). ARS-numbered stops use the OSM bus stop with that ref.
+const OSM_ARS = {"23148":[37.528438,127.030581],"23170":[37.520853,127.056262],"23192":[37.515083,127.060057],"23237":[37.495754,127.066981],"23308":[37.499254,127.051298],"23511":[37.501862,127.067315],"23857":[37.501868,127.066618],"24124":[37.519526,127.109984],"24130":[37.51718,127.10103],"24131":[37.516632,127.1001],"24150":[37.509028,127.091934],"04276":[37.558924,127.023912],"04127":[37.558794,127.040923]};
+const OVERRIDE = {
+  "성동교남단 버스정류장(04185)": [37.550099, 127.044444],        // OSM stop "성동교남단.서울숲리버포레"
+  "광진구청 잎 버스정류장(05175)": [37.539674, 127.082918],       // panel offset at zoom 15.3; puts it on 자양로 at 광진구청
+  "뚝섬역 8번출구": [37.547472, 127.046317],                      // site reuses the KB국민은행 서울숲 link; OSM exit 8
+};
+// Positions that remain uncertain: shown as approximate on the map.
+const UNCERTAIN = new Set(["한남더힐아파트 119동 앞 공항버스정류장(03749)"]);
 for (const c of Object.values(courses)) for (const s of [...c.on, ...c.off]) {
-  const r = res[s.href]; s.lat = r.lat ? +r.lat.toFixed(6) : null; s.lng = r.lng ? +r.lng.toFixed(6) : null; s.how = r.how;
-  if (s.how === "fail" && FALLBACK[s.n]) { [s.lat, s.lng] = FALLBACK[s.n]; s.how = "est"; }
+  const r = res[s.href]; let lat = r.lat, lng = r.lng; s.how = r.how;
+  const ars = (s.n.match(/\((\d{5})\)/) || [])[1];
+  if (r.how === "busstation" && (r.z === 15 || r.z === 14) && !NO_SHIFT.has(s.n) && !UNCERTAIN.has(s.n)) {
+    const mpp = 156543.03392 * Math.cos(lat * Math.PI / 180) / 2 ** r.z;
+    lng += PANEL_SHIFT_PX * mpp / (6378137 * Math.cos(lat * Math.PI / 180)) * 180 / Math.PI; s.how = "busstation-shifted";
+  }
+  if (r.how === "busstation" && ars && OSM_ARS[ars]) { [lat, lng] = OSM_ARS[ars]; s.how = "osm-ars"; }
+  if (OVERRIDE[s.n]) { [lat, lng] = OVERRIDE[s.n]; s.how = "override"; }
+  if (s.how === "fail" && FALLBACK[s.n]) { [lat, lng] = FALLBACK[s.n]; s.how = "est"; }
+  if (UNCERTAIN.has(s.n)) s.how = "est";
+  s.lat = lat ? +lat.toFixed(6) : null; s.lng = lng ? +lng.toFixed(6) : null;
 }
 const fails = hrefs.filter(h => res[h].how === "fail");
 console.log("links", hrefs.length, "fails", fails.length, JSON.stringify(fails.map(h => [h, res[h]])));
