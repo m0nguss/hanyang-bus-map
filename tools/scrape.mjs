@@ -83,12 +83,17 @@ for (const c of Object.values(prev)) for (const s of [...(c.on || []), ...(c.off
 let cached = 0;
 for (const h of hrefs) if (res[h].how === "fail" && cache[h]) { [res[h].lat, res[h].lng] = cache[h]; res[h].how = "place-cached"; cached++; }
 if (cached) console.log(`place pages throttled: reused ${cached} coordinates from the previous ${OUT}`);
-// Naver place pages that don't expose coordinates to a plain fetch: OSM (Nominatim) positions, shown as approximate.
+// Links whose Naver place no longer exists (the page has no data even when fetched slowly; the landmark is gone
+// from Naver search). Positions looked up one at a time on 2026-11-18. `est` = still approximate on the map.
 const FALLBACK = {
-  "성원중학교(서울숲동물병원 앞)": [37.539263, 127.052267],
-  "아시아선수촌아파트(부산은행 잠실지점 앞)": [37.509841, 127.079042],
-  "왕십리뉴타운텐즈힐1단지(GS편의점 앞)": [37.568846, 127.024402],
-  "응봉현대아파트(MG새마을금고 응봉지점 앞)": [37.551045, 127.031034],
+  // 서울숲동물병원 closed. OSM stop "성원중.성수2가제1동주민센터" across 뚝섬로 from the 등교 stop.
+  "성원중학교(서울숲동물병원 앞)": [37.539193, 127.053605],
+  // 부산은행 잠실지점 gone. Naver direction point "아시아선수촌아파트정문" (id 18847055).
+  "아시아선수촌아파트(부산은행 잠실지점 앞)": [37.509757, 127.078594, "est"],
+  // Now "GS25 성동텐즈힐점", 무학로 33 (Naver id 2099423952).
+  "왕십리뉴타운텐즈힐1단지(GS편의점 앞)": [37.567844, 127.025941],
+  // Now "성동행당새마을금고 응봉지점", 독서당로 381 현대종합상가 (Naver id 1110142864).
+  "응봉현대아파트(MG새마을금고 응봉지점 앞)": [37.55028, 127.030919],
 };
 // Bus-station links only carry the map center. Shared from desktop Naver Map at the default zoom (15, or 14),
 // the center sits 97 px west of the station because of the left side panel; shift it back.
@@ -104,17 +109,18 @@ const OVERRIDE = {
   "뚝섬역 8번출구": [37.547472, 127.046317],                      // site reuses the KB국민은행 서울숲 link; OSM exit 8
 };
 // Positions that remain uncertain: shown as approximate on the map.
+// 한남더힐 119동: not in OSM or Naver search. The shifted center lands ~70 m from Naver's "한남더힐아파트정문" point.
 const UNCERTAIN = new Set(["한남더힐아파트 119동 앞 공항버스정류장(03749)"]);
 for (const c of Object.values(courses)) for (const s of [...c.on, ...c.off]) {
   const r = res[s.href]; let lat = r.lat, lng = r.lng; s.how = r.how;
   const ars = (s.n.match(/\((\d{5})\)/) || [])[1];
-  if (r.how === "busstation" && (r.z === 15 || r.z === 14) && !NO_SHIFT.has(s.n) && !UNCERTAIN.has(s.n)) {
+  if (r.how === "busstation" && (r.z === 15 || r.z === 14) && !NO_SHIFT.has(s.n)) {
     const mpp = 156543.03392 * Math.cos(lat * Math.PI / 180) / 2 ** r.z;
     lng += PANEL_SHIFT_PX * mpp / (6378137 * Math.cos(lat * Math.PI / 180)) * 180 / Math.PI; s.how = "busstation-shifted";
   }
   if (r.how === "busstation" && ars && OSM_ARS[ars]) { [lat, lng] = OSM_ARS[ars]; s.how = "osm-ars"; }
   if (OVERRIDE[s.n]) { [lat, lng] = OVERRIDE[s.n]; s.how = "override"; }
-  if (s.how === "fail" && FALLBACK[s.n]) { [lat, lng] = FALLBACK[s.n]; s.how = "est"; }
+  if (s.how === "fail" && FALLBACK[s.n]) { const [a, b, est] = FALLBACK[s.n]; lat = a; lng = b; s.how = est ? "est" : "lookup"; }
   if (UNCERTAIN.has(s.n)) s.how = "est";
   s.lat = lat ? +lat.toFixed(6) : null; s.lng = lng ? +lng.toFixed(6) : null;
 }
