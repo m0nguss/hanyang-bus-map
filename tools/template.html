@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한양초 통학버스 노선 지도</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#f6f6f8;--panel:#fff;--line:#e4e4ea;--t1:#1d1d22;--t2:#5d5d68;--t3:#8c8c96;--accent:#e8395f;--sel:#fff1f4}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--t1);font:14px/1.45 "Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{display:grid;grid-template-columns:380px 1fr;height:100vh}
+aside{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+header{padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:19px;letter-spacing:-.3px}
+h1 b{color:var(--accent)}
+.sub{color:var(--t3);font-size:12px;margin-top:4px}
+.seg{display:grid;grid-template-columns:1fr 1fr;margin-top:12px;background:#f0f0f4;border-radius:10px;padding:3px;gap:3px}
+.seg button{border:0;background:transparent;padding:8px 0;border-radius:8px;font:inherit;font-weight:500;color:var(--t2);cursor:pointer}
+.seg button[aria-pressed=true]{background:#fff;color:var(--t1);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg button small{font-weight:400;color:var(--t3);margin-left:4px;font-size:11px}
+.slot{display:flex;gap:6px;margin-top:8px;align-items:center;font-size:12px;color:var(--t2)}
+.slot button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font:inherit;cursor:pointer;color:var(--t2)}
+.slot button[aria-pressed=true]{border-color:var(--t1);color:var(--t1);font-weight:500}
+.search{margin-top:10px;display:flex;gap:6px}
+.search input{flex:1;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;outline:none}
+.search input:focus{border-color:var(--accent)}
+.search button{padding:8px 12px;border:1px solid var(--line);background:#fff;border-radius:8px;font:inherit;cursor:pointer;white-space:nowrap}
+.search button:hover{border-color:var(--t3)}
+.scroll{overflow:auto;flex:1;min-height:0}
+.courses{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:12px 14px}
+.cbtn{display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;text-align:left;font:inherit;color:inherit;min-width:0}
+.cbtn:hover{border-color:var(--t3)}
+.cbtn[aria-pressed=true]{border-color:var(--c);background:color-mix(in srgb,var(--c) 9%,#fff);box-shadow:inset 0 0 0 1px var(--c)}
+.cbtn .sw{width:11px;height:11px;border-radius:50%;background:var(--c);flex:none}
+.cbtn b{font-size:13px}
+.cbtn small{display:block;color:var(--t3);font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cbtn>span:last-child{min-width:0}
+.dimmed .cbtn[aria-pressed=false]{opacity:.55}
+.detail{padding:4px 14px 16px}
+.dhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:10px 0 6px}
+.dhead h2{margin:0;font-size:15px}
+.dhead span{color:var(--t3);font-size:12px}
+ol.stops{list-style:none;margin:0;padding:0}
+ol.stops li,.colhead{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;padding:7px 8px;border-radius:8px}
+ol.stops li{cursor:pointer}
+ol.stops li:hover,ol.stops li.on{background:var(--sel)}
+.off ol.stops li,.off .colhead{grid-template-columns:26px 1fr 112px}
+.colhead{padding-top:0;padding-bottom:2px;font-size:11px;color:var(--t3)}
+.tms{display:grid;grid-template-columns:repeat(3,1fr);text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--t3)}
+.tms .cur{color:var(--t1);font-weight:500}
+.num{width:24px;height:24px;border-radius:50%;background:var(--c);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.num.est{background:#fff;color:var(--c);border:2px dashed var(--c)}
+.nm{min-width:0;word-break:keep-all}
+.nm .cr{display:block;font-size:11px;color:var(--t3)}
+.nm a{color:var(--t3);font-size:11px;margin-left:4px;text-decoration:none;white-space:nowrap}
+.nm a:hover{color:#03c75a;text-decoration:underline}
+.tag{font-size:10px;color:#a0640a;background:#fff4dc;border-radius:4px;padding:1px 5px;margin-left:4px;white-space:nowrap}
+.warn{font-size:10px;color:#b42318;background:#fee4e2;border-radius:4px;padding:1px 5px;margin-left:4px;white-space:nowrap}
+.tm{font-variant-numeric:tabular-nums;font-weight:500}
+.school{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:center;padding:7px 8px;color:var(--t2)}
+.school .num{background:var(--t1)}
+.empty{color:var(--t3);padding:10px 8px}
+footer{border-top:1px solid var(--line);padding:10px 16px;font-size:11px;color:var(--t3);line-height:1.5}
+.legend{display:flex;gap:14px;margin-bottom:4px;color:var(--t2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-2px;margin-right:4px;background:var(--accent)}
+.legend i.e{background:#fff;border:2px dashed var(--accent)}
+footer a{color:inherit}
+.mapwrap{min-height:0}
+#map{height:100%;width:100%}
+.pin{width:22px;height:22px;border-radius:50%;background:var(--c);color:#fff;font:700 10px/1 "Noto Sans KR",sans-serif;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);transition:transform .12s}
+.pin.est{background:#fff;color:var(--c);border:2px dashed var(--c)}
+.pin.hl{transform:scale(1.4);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 30%,transparent)}
+.schoolpin{background:#1d1d22;color:#fff;font:700 12px/1 "Noto Sans KR",sans-serif;padding:6px 9px;border-radius:14px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.35);border:2px solid #fff;transform:translate(-50%,-50%);display:inline-block}
+.leaflet-container{font-family:"Noto Sans KR",sans-serif}
+.pop b{font-size:13px}.pop div{color:#5d5d68;font-size:12px;margin-top:2px}
+.pop a{display:inline-block;margin-top:6px;color:#03a64a;font-weight:500;text-decoration:none}
+@media (max-width:760px){
+ .app{grid-template-columns:1fr;grid-template-rows:auto;height:auto;min-height:100vh}
+ .mapwrap{order:1;position:sticky;top:0;height:46vh;z-index:500}
+ aside{order:2;border-right:0;border-top:1px solid var(--line)}
+ .scroll{overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+ <header>
+  <h1>한양초 통학버스 <b id="title">등교노선</b></h1>
+  <div class="sub" id="sub"></div>
+  <div class="seg" role="group" aria-label="등하교 선택">
+   <button type="button" data-m="on" aria-pressed="true">등교<small>아침</small></button>
+   <button type="button" data-m="off" aria-pressed="false">하교<small>오후</small></button>
+  </div>
+  <div class="slot" id="slot" hidden>지도에 표시할 하교 시간
+   <button type="button" data-s="0" aria-pressed="true">1차</button><button type="button" data-s="1" aria-pressed="false">2차</button><button type="button" data-s="2" aria-pressed="false">월수금</button>
+  </div>
+  <div class="search"><input id="q" type="search" placeholder="정류장 검색 (예: 은마, 성수역)"><button id="all" type="button">전체 보기</button></div>
+ </header>
+ <div class="scroll">
+  <div class="courses" id="courses"></div>
+  <div class="detail" id="detail"></div>
+ </div>
+ <footer>
+  <div class="legend"><span><i></i>네이버 지도 좌표</span><span><i class="e"></i>근사 위치</span></div>
+  정류장 위치와 시간은 <a href="https://www.hye.or.kr/?c=A1000/A2000/A2002" target="_blank" rel="noopener">학교 홈페이지 학교버스노선도</a>의 네이버 지도 링크와 노선표 기준입니다(__ASOF__ 확인). 선은 정류장을 순서대로 이은 직선이라 실제 도로 경로와 다릅니다. 하교 시간은 모두 오후입니다.
+ </footer>
+</aside>
+<div class="mapwrap"><div id="map"></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const DATA = __DATA__;
+const COLORS = ["#e8395f","#2f6fde","#16a34a","#f08c00","#8b5cf6","#0891b2","#db2777","#65a30d","#b45309","#4f46e5","#0d9488","#dc2626","#7c3aed","#ca8a04","#475569"];
+const SLOTS = ["1차","2차","월수금"];
+const NOTES = {
+ "off|2코스|2":"학교 사이트에서 앞 정류장(KB국민은행 서울숲지점)과 같은 지도 링크를 쓰고 있어 위치가 겹칩니다",
+ "off|1코스|4":"네이버 장소 좌표를 못 읽어 성원중학교 위치로 표시",
+ "off|3코스|4":"네이버 장소 좌표를 못 읽어 아시아선수촌아파트 위치로 표시",
+ "off|8코스|1":"네이버 장소 좌표를 못 읽어 텐즈힐 위치로 표시",
+ "off|9코스|3":"네이버 장소 좌표를 못 읽어 응봉현대아파트 위치로 표시"
+};
+const courses = Object.keys(DATA.courses);
+const COLOR = Object.fromEntries(courses.map((c,i)=>[c,COLORS[i%COLORS.length]]));
+let mode = "on", slot = 0;
+
+const map = L.map("map").setView(DATA.school,13);
+// OSM tiles need a Referer: open this page over http(s), not as a local file (file://).
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,referrerPolicy:"strict-origin-when-cross-origin",attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+if (location.protocol === "file:") document.addEventListener("DOMContentLoaded",()=>{
+  const n=document.createElement("div"); n.textContent="로컬 파일로 열면 OSM 지도 배경이 차단됩니다. 웹서버(http://localhost 등)로 열어 주세요.";
+  n.style.cssText="position:absolute;z-index:1000;left:50%;top:12px;transform:translateX(-50%);background:#fff;border:1px solid #e4e4ea;border-radius:8px;padding:6px 10px;font-size:12px;box-shadow:0 1px 4px rgba(0,0,0,.15)";
+  document.querySelector(".mapwrap").style.position="relative"; document.querySelector(".mapwrap").appendChild(n); });
+L.marker(DATA.school,{icon:L.divIcon({className:"",html:'<span class="schoolpin">한양초등학교</span>',iconSize:[0,0]}),zIndexOffset:1000}).addTo(map);
+
+const esc = t=>String(t).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+const stops = c=>DATA.courses[c][mode];
+const timeOf = s=>mode==="on" ? s.t : s.t[slot];
+const timeLabel = s=>mode==="on" ? `${s.t} 승차` : `오후 ${s.t[slot]} 하차 (${SLOTS[slot]})`;
+const key = (c,no)=>`${mode}|${c}|${no}`;
+function pinIcon(c,s,no,hl){return L.divIcon({className:"",html:`<div class="pin ${s.est?"est":""} ${hl?"hl":""}" style="--c:${COLOR[c]}">${no}</div>`,iconSize:[22,22],iconAnchor:[11,11]});}
+function popup(c,s,no){const note=NOTES[key(c,no)];
+  const times = mode==="on" ? `${s.t} 승차` : SLOTS.map((l,i)=>`${l} ${s.t[i]}`).join(" · ");
+  return `<div class="pop"><b>${esc(s.n)}</b><div>${c} ${mode==="on"?"등교":"하교"} · ${no}번째</div><div>${times}</div>${note?`<div>${esc(note)}</div>`:""}<a href="${esc(s.u)}" target="_blank" rel="noopener">네이버 지도에서 보기 ↗</a></div>`;}
+
+let layers = {}, markers = {}, sel = new Set(courses), hlKey = null;
+function build(){
+  Object.values(layers).forEach(l=>map.removeLayer(l.g));
+  layers = {}; markers = {};
+  for (const c of courses){
+    const g = L.layerGroup(), list = stops(c), color = COLOR[c];
+    const pts = list.map(s=>[s.lat,s.lng]);
+    const line = L.polyline(pts,{color,weight:3.5,opacity:.85}).addTo(g);
+    const leg = mode==="on" ? [pts[pts.length-1],DATA.school] : [DATA.school,pts[0]];
+    L.polyline(leg,{color,weight:3,opacity:.55,dashArray:"4 7"}).addTo(g);
+    list.forEach((s,i)=>{ const no=i+1;
+      const m = L.marker([s.lat,s.lng],{icon:pinIcon(c,s,no,false),riseOnHover:true})
+        .bindTooltip(`${c} ${no}. ${s.n} · ${timeOf(s)}`,{direction:"top",offset:[0,-10]})
+        .bindPopup(popup(c,s,no)).addTo(g);
+      m.on("click",()=>{ if(!sel.has(c) || sel.size===courses.length || q.value){ sel=new Set([c]); q.value=""; update(false);} focusStop(c,no,false); });
+      markers[key(c,no)] = m;
+    });
+    line.on("click",()=>{sel=new Set([c]);q.value="";update(true);});
+    layers[c] = {g,line};
+  }
+}
+
+const elC = document.getElementById("courses"), elD = document.getElementById("detail"), q = document.getElementById("q");
+function renderCourses(){
+  elC.innerHTML = courses.map(c=>{const s=stops(c);
+    const sub = mode==="on" ? `${s.length}곳 · ${s[0].t}–${s[s.length-1].t}` : `${s.length}곳 · ${s[0].t[slot]} 첫 하차`;
+    return `<button class="cbtn" type="button" data-c="${c}" style="--c:${COLOR[c]}" aria-pressed="true"><span class="sw"></span><span><b>${c}</b><small>${sub}</small></span></button>`;}).join("");
+}
+elC.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;const c=b.dataset.c;
+  const all = sel.size===courses.length;
+  if (e.ctrlKey||e.metaKey||e.shiftKey){ if(all) sel=new Set(); sel.has(c)?sel.delete(c):sel.add(c); if(!sel.size) sel=new Set(courses); }
+  else { sel = (sel.size===1&&sel.has(c)) ? new Set(courses) : new Set([c]); }
+  q.value=""; update(true);});
+document.getElementById("all").onclick=()=>{sel=new Set(courses);q.value="";update(true);};
+q.addEventListener("input",()=>update(true));
+document.querySelectorAll(".seg [data-m]").forEach(b=>b.onclick=()=>{ if(mode===b.dataset.m) return; mode=b.dataset.m; refreshMode(true); });
+document.querySelectorAll("#slot [data-s]").forEach(b=>b.onclick=()=>{ slot=+b.dataset.s; refreshMode(false); });
+
+function refreshMode(fit){
+  document.querySelectorAll(".seg [data-m]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.m===mode)));
+  document.querySelectorAll("#slot [data-s]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.s===slot)));
+  document.getElementById("slot").hidden = mode!=="off";
+  document.getElementById("title").textContent = mode==="on" ? "등교노선" : "하교노선";
+  const n = courses.reduce((a,c)=>a+stops(c).length,0);
+  document.getElementById("sub").textContent = `한양초등학교 · ${courses.length}개 코스 · ${mode==="on"?"등교":"하교"} 정류장 ${n}곳`;
+  elD.classList.toggle("off", mode==="off");
+  build(); renderCourses(); update(fit);
+}
+
+function update(fit){
+  const all = sel.size===courses.length;
+  elC.classList.toggle("dimmed",!all);
+  elC.querySelectorAll("[data-c]").forEach(b=>b.setAttribute("aria-pressed",String(sel.has(b.dataset.c))));
+  const term = q.value.trim().replace(/\s+/g,"");
+  const hits = term ? courses.flatMap(c=>stops(c).map((s,i)=>({c,s,no:i+1})).filter(h=>h.s.n.replace(/\s+/g,"").includes(term))) : null;
+  const vis = hits ? new Set(hits.map(h=>h.c)) : sel;
+  for (const c of courses){
+    const on = vis.has(c);
+    if (on && !map.hasLayer(layers[c].g)) layers[c].g.addTo(map);
+    if (!on && map.hasLayer(layers[c].g)) map.removeLayer(layers[c].g);
+    layers[c].line.setStyle({weight:(!hits && !all) ? 5 : 3.5});
+  }
+  hlKey = null;
+  renderDetail(hits);
+  if (fit){
+    map.invalidateSize();
+    const b = L.latLngBounds([DATA.school,DATA.school]);
+    (hits && hits.length ? hits.map(h=>[h.s.lat,h.s.lng]) : [...vis].flatMap(c=>stops(c).map(s=>[s.lat,s.lng]))).forEach(p=>b.extend(p));
+    map.fitBounds(b,{padding:[40,40],maxZoom:15});
+  }
+}
+function timeCell(s){
+  if (mode==="on") return `<span class="tm">${s.t}</span>`;
+  return `<span class="tms">${s.t.map((t,i)=>`<span class="${i===slot?"cur":""}">${t}</span>`).join("")}</span>`;
+}
+function row(c,s,no,showCourse){const note=NOTES[key(c,no)];
+  return `<li data-k="${key(c,no)}" style="--c:${COLOR[c]}"><span class="num ${s.est?"est":""}">${no}</span><span class="nm">${esc(s.n)}${s.est?'<span class="tag">근사 위치</span>':""}${note&&!s.est?`<span class="warn" title="${esc(note)}">위치 확인</span>`:""}<a href="${esc(s.u)}" target="_blank" rel="noopener" title="네이버 지도에서 보기">지도↗</a>${showCourse?`<span class="cr">${c}</span>`:""}</span>${timeCell(s)}</li>`;}
+const colhead = ()=> mode==="off" ? `<div class="colhead"><span></span><span>정류장</span><span class="tms"><span>1차</span><span>2차</span><span>월수금</span></span></div>` : "";
+function renderDetail(hits){
+  if (hits){
+    elD.innerHTML = `<div class="dhead"><h2>“${esc(q.value.trim())}” 검색 결과</h2><span>${hits.length}곳</span></div>` +
+      (hits.length ? colhead()+`<ol class="stops">${hits.map(h=>row(h.c,h.s,h.no,true)).join("")}</ol>` : `<div class="empty">맞는 정류장이 없습니다.</div>`);
+    return;
+  }
+  if (sel.size===courses.length){
+    elD.innerHTML = `<div class="dhead"><h2>전체 코스</h2></div><div class="empty" style="padding-top:0">코스 버튼이나 지도 위 노선을 누르면 정류장 목록이 나옵니다. Ctrl(⌘)이나 Shift를 누른 채 누르면 여러 코스를 함께 볼 수 있습니다. 각 정류장의 ‘지도↗’는 학교가 올린 네이버 지도 위치를 엽니다.</div>`;
+    return;
+  }
+  elD.innerHTML = [...sel].map(c=>{const list=stops(c);
+    const school = t=>`<div class="school"><span class="num">학</span><span>한양초등학교 ${t}</span></div>`;
+    const head = mode==="on" ? `${list.length}곳 · ${list[0].t} 첫 승차` : `${list.length}곳 · 하교 시간은 오후`;
+    return `<div class="dhead"><h2 style="color:${COLOR[c]}">${c} ${mode==="on"?"등교":"하교"}</h2><span>${head}</span></div>
+    ${mode==="off"?school("출발"):""}${colhead()}<ol class="stops">${list.map((s,i)=>row(c,s,i+1,false)).join("")}</ol>${mode==="on"?school("도착"):""}`;}).join("");
+}
+elD.addEventListener("click",e=>{ if(e.target.closest("a")) return; const li=e.target.closest("[data-k]");if(!li)return;const [,c,no]=li.dataset.k.split("|");focusStop(c,+no,true);});
+elD.addEventListener("mouseover",e=>{const li=e.target.closest("[data-k]");if(li && li.dataset.k!==hlKey)highlight(li.dataset.k);});
+function highlight(k){
+  if (hlKey && markers[hlKey]){const [,c,no]=hlKey.split("|");markers[hlKey].setIcon(pinIcon(c,stops(c)[no-1],+no,false)).setZIndexOffset(0);}
+  hlKey=k;
+  if (k && markers[k]){const [,c,no]=k.split("|");markers[k].setIcon(pinIcon(c,stops(c)[no-1],+no,true)).setZIndexOffset(900);}
+  elD.querySelectorAll("li.on").forEach(x=>x.classList.remove("on"));
+  if (k){const li=elD.querySelector(`[data-k="${k}"]`); if(li) li.classList.add("on");}
+}
+function focusStop(c,no,pan){const k=key(c,no), m=markers[k]; highlight(k);
+  if (pan) map.setView(m.getLatLng(),Math.max(map.getZoom(),15));
+  m.openPopup();
+  const li=elD.querySelector(`[data-k="${k}"]`); if(li) li.scrollIntoView({block:"nearest"});}
+refreshMode(true);
+window.addEventListener("load",()=>update(true));
+new ResizeObserver(()=>map.invalidateSize()).observe(document.getElementById("map"));
+</script>
+</body>
+</html>
