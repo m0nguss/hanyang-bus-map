@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한양초 통학버스 노선 지도</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#f6f6f8;--panel:#fff;--line:#e4e4ea;--t1:#1d1d22;--t2:#5d5d68;--t3:#8c8c96;--accent:#e8395f;--sel:#fff1f4}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--t1);font:14px/1.45 "Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif}
+.app{display:grid;grid-template-columns:380px 1fr;height:100vh}
+aside{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0}
+header{padding:16px 18px 12px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:19px;letter-spacing:-.3px}
+h1 b{color:var(--accent)}
+.sub{color:var(--t3);font-size:12px;margin-top:4px}
+.seg{display:grid;grid-template-columns:1fr 1fr;margin-top:12px;background:#f0f0f4;border-radius:10px;padding:3px;gap:3px}
+.seg button{border:0;background:transparent;padding:8px 0;border-radius:8px;font:inherit;font-weight:500;color:var(--t2);cursor:pointer}
+.seg button[aria-pressed=true]{background:#fff;color:var(--t1);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg button small{font-weight:400;color:var(--t3);margin-left:4px;font-size:11px}
+.slot{display:flex;gap:6px;margin-top:8px;align-items:center;font-size:12px;color:var(--t2)}
+.slot button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:3px 10px;font:inherit;cursor:pointer;color:var(--t2)}
+.slot button[aria-pressed=true]{border-color:var(--t1);color:var(--t1);font-weight:500}
+.search{margin-top:10px;display:flex;gap:6px}
+.search input{flex:1;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;outline:none}
+.search input:focus{border-color:var(--accent)}
+.search button{padding:8px 12px;border:1px solid var(--line);background:#fff;border-radius:8px;font:inherit;cursor:pointer;white-space:nowrap}
+.search button:hover{border-color:var(--t3)}
+.scroll{overflow:auto;flex:1;min-height:0}
+.courses{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:12px 14px}
+.cbtn{display:flex;align-items:center;gap:7px;padding:7px 8px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;text-align:left;font:inherit;color:inherit;min-width:0}
+.cbtn:hover{border-color:var(--t3)}
+.cbtn[aria-pressed=true]{border-color:var(--c);background:color-mix(in srgb,var(--c) 9%,#fff);box-shadow:inset 0 0 0 1px var(--c)}
+.cbtn .sw{width:11px;height:11px;border-radius:50%;background:var(--c);flex:none}
+.cbtn b{font-size:13px}
+.cbtn small{display:block;color:var(--t3);font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cbtn>span:last-child{min-width:0}
+.dimmed .cbtn[aria-pressed=false]{opacity:.55}
+.detail{padding:4px 14px 16px}
+.dhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:10px 0 6px}
+.dhead h2{margin:0;font-size:15px}
+.dhead span{color:var(--t3);font-size:12px}
+ol.stops{list-style:none;margin:0;padding:0}
+ol.stops li,.colhead{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;padding:7px 8px;border-radius:8px}
+ol.stops li{cursor:pointer}
+ol.stops li:hover,ol.stops li.on{background:var(--sel)}
+.off ol.stops li,.off .colhead{grid-template-columns:26px 1fr 112px}
+.colhead{padding-top:0;padding-bottom:2px;font-size:11px;color:var(--t3)}
+.tms{display:grid;grid-template-columns:repeat(3,1fr);text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--t3)}
+.tms .cur{color:var(--t1);font-weight:500}
+.num{width:24px;height:24px;border-radius:50%;background:var(--c);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center}
+.num.est{background:#fff;color:var(--c);border:2px dashed var(--c)}
+.nm{min-width:0;word-break:keep-all}
+.nm .cr{display:block;font-size:11px;color:var(--t3)}
+.nm a{color:var(--t3);font-size:11px;margin-left:4px;text-decoration:none;white-space:nowrap}
+.nm a:hover{color:#03c75a;text-decoration:underline}
+.tag{font-size:10px;color:#a0640a;background:#fff4dc;border-radius:4px;padding:1px 5px;margin-left:4px;white-space:nowrap}
+.warn{font-size:10px;color:#b42318;background:#fee4e2;border-radius:4px;padding:1px 5px;margin-left:4px;white-space:nowrap}
+.tm{font-variant-numeric:tabular-nums;font-weight:500}
+.school{display:grid;grid-template-columns:26px 1fr;gap:10px;align-items:center;padding:7px 8px;color:var(--t2)}
+.school .num{background:var(--t1)}
+.empty{color:var(--t3);padding:10px 8px}
+footer{border-top:1px solid var(--line);padding:10px 16px;font-size:11px;color:var(--t3);line-height:1.5}
+.legend{display:flex;gap:14px;margin-bottom:4px;color:var(--t2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-2px;margin-right:4px;background:var(--accent)}
+.legend i.e{background:#fff;border:2px dashed var(--accent)}
+footer a{color:inherit}
+.mapwrap{min-height:0}
+#map{height:100%;width:100%}
+.pin{width:22px;height:22px;border-radius:50%;background:var(--c);color:#fff;font:700 10px/1 "Noto Sans KR",sans-serif;display:grid;place-items:center;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);transition:transform .12s}
+.pin.est{background:#fff;color:var(--c);border:2px dashed var(--c)}
+.pin.hl{transform:scale(1.4);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 30%,transparent)}
+.schoolpin{background:#1d1d22;color:#fff;font:700 12px/1 "Noto Sans KR",sans-serif;padding:6px 9px;border-radius:14px;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.35);border:2px solid #fff;transform:translate(-50%,-50%);display:inline-block}
+.leaflet-container{font-family:"Noto Sans KR",sans-serif}
+.pop b{font-size:13px}.pop div{color:#5d5d68;font-size:12px;margin-top:2px}
+.pop a{display:inline-block;margin-top:6px;color:#03a64a;font-weight:500;text-decoration:none}
+@media (max-width:760px){
+ .app{grid-template-columns:1fr;grid-template-rows:auto;height:auto;min-height:100vh}
+ .mapwrap{order:1;position:sticky;top:0;height:46vh;z-index:500}
+ aside{order:2;border-right:0;border-top:1px solid var(--line)}
+ .scroll{overflow:visible}
+}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+ <header>
+  <h1>한양초 통학버스 <b id="title">등교노선</b></h1>
+  <div class="sub" id="sub"></div>
+  <div class="seg" role="group" aria-label="등하교 선택">
+   <button type="button" data-m="on" aria-pressed="true">등교<small>아침</small></button>
+   <button type="button" data-m="off" aria-pressed="false">하교<small>오후</small></button>
+  </div>
+  <div class="slot" id="slot" hidden>지도에 표시할 하교 시간
+   <button type="button" data-s="0" aria-pressed="true">1차</button><button type="button" data-s="1" aria-pressed="false">2차</button><button type="button" data-s="2" aria-pressed="false">월수금</button>
+  </div>
+  <div class="search"><input id="q" type="search" placeholder="정류장 검색 (예: 은마, 성수역)"><button id="all" type="button">전체 보기</button></div>
+ </header>
+ <div class="scroll">
+  <div class="courses" id="courses"></div>
+  <div class="detail" id="detail"></div>
+ </div>
+ <footer>
+  <div class="legend"><span><i></i>네이버 지도 좌표</span><span><i class="e"></i>근사 위치</span></div>
+  정류장 위치와 시간은 <a href="https://www.hye.or.kr/?c=A1000/A2000/A2002" target="_blank" rel="noopener">학교 홈페이지 학교버스노선도</a>의 네이버 지도 링크와 노선표 기준입니다(2026-11-18 확인). 선은 정류장을 순서대로 이은 직선이라 실제 도로 경로와 다릅니다. 하교 시간은 모두 오후입니다.
+ </footer>
+</aside>
+<div class="mapwrap"><div id="map"></div></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const DATA = {"school":[37.557647,127.050332],"courses":{"1코스":{"on":[{"n":"구의현대2단지 아파트 상가 버스정류장(05163)","t":"7:54","lat":37.53803,"lng":127.096862,"u":"https://naver.me/5dPQwzI1"},{"n":"강변스파랜드 주차장입구","t":"7:56","lat":37.534963,"lng":127.091712,"u":"https://naver.me/GWJKdL6M"},{"n":"성자초등학교 건너편","t":"8:03","lat":37.531618,"lng":127.082901,"u":"https://naver.me/GdyZnlGU"},{"n":"동자초등학교(배스킨라빈스 맞은편)","t":"8:08","lat":37.534321,"lng":127.071485,"u":"https://naver.me/IgTiP1jH"},{"n":"롯데캐슬리버파크시그니처 정문","t":"8:15","lat":37.536994,"lng":127.062369,"u":"https://naver.me/5qAnVU7d"},{"n":"원앤원(행운카센터 앞)","t":"8:17","lat":37.538187,"lng":127.058434,"u":"https://naver.me/5Z0zDeM6"},{"n":"크래프톤 본사(구 성수이마트) 앞 버스정류장(04198)","t":"8:20","lat":37.5394,"lng":127.049228,"u":"https://naver.me/xdfK4CHG"},{"n":"경일초등학교(성수우동 앞)","t":"8:21","lat":37.540707,"lng":127.048351,"u":"https://naver.me/Ggeys18t"},{"n":"성수도시재생지원센터 앞(한진아파트)","t":"8:22","lat":37.541422,"lng":127.046003,"u":"https://naver.me/56RKn9ol"},{"n":"성동구민종합체육센터 건너편(멀티커피 서울숲점)","t":"8:25","lat":37.54515,"lng":127.045025,"u":"https://naver.me/Fr76oGEd"}],"off":[{"n":"성동구민종합체육센터 입구","t":["2:00","3:40","2:49"],"lat":37.545652,"lng":127.044656,"u":"https://naver.me/FlJuiQ6K"},{"n":"한진타운아파트 상가(CU편의점, 한사랑교회 앞)","t":["2:03","3:42","2:50"],"lat":37.541233,"lng":127.045814,"u":"https://naver.me/FzIAGfWO"},{"n":"경일초등학교(해오름공인중개사 앞)","t":["2:05","3:43","2:52"],"lat":37.540366,"lng":127.048372,"u":"https://naver.me/xS8F2o6V"},{"n":"성원중학교(서울숲동물병원 앞)","t":["2:07","3:46","2:55"],"lat":37.539263,"lng":127.052267,"u":"https://naver.me/5dx94e7x","est":1},{"n":"원앤원(피자알볼로 앞)","t":["2:08","3:47","2:57"],"lat":37.538187,"lng":127.058434,"u":"https://naver.me/xeATzKpA"},{"n":"롯데캐슬리버파크시그니처 정문 맞은편(김밥타운 앞)","t":["2:10","3:50","3:00"],"lat":37.536534,"lng":127.063195,"u":"https://naver.me/xbLXAOVn"},{"n":"동자초등학교(이삭토스트 앞)","t":["2:14","3:55","3:04"],"lat":37.534414,"lng":127.071075,"u":"https://naver.me/xlKSs8xn"},{"n":"성자초등학교 앞 버스정류장(05562)","t":["2:19","4:00","3:08"],"lat":37.531445,"lng":127.082391,"u":"https://naver.me/GHV1Hmvw"},{"n":"아크로리버아파트 입구","t":["2:25","4:05","3:13"],"lat":37.5358,"lng":127.092458,"u":"https://naver.me/5jmG49fo"},{"n":"현대 프라임아파트 버스정류장(05724)","t":["2:28","4:09","3:18"],"lat":37.538003,"lng":127.097042,"u":"https://naver.me/FYInGLQx"}]},"2코스":{"on":[{"n":"잠실 파크리오아파트앞 버스정류장(24124)","t":"7:40","lat":37.519619,"lng":127.105747,"u":"https://naver.me/GFYOxdvr"},{"n":"잠실 장미아파트 A동 상가 버스정류장(24130)","t":"7:42","lat":37.517237,"lng":127.096917,"u":"https://naver.me/GFYOxvdk"},{"n":"하나은행 구의역지점","t":"7:52","lat":37.537993,"lng":127.083686,"u":"https://naver.me/5MUCqZKs"},{"n":"광진제일큰약국 앞 버스정류장(05599)","t":"7:53","lat":37.542415,"lng":127.084282,"u":"https://naver.me/5BkJlFid"},{"n":"e편한세상광진그랜드파크(현대오일뱅크 맞은편)","t":"7:55","lat":37.545242,"lng":127.080259,"u":"https://naver.me/Fkjno1rS"},{"n":"왕약국(우리은행 화양동지점 맞은편)","t":"8:12","lat":37.548381,"lng":127.065601,"u":"https://naver.me/x50GEapG"},{"n":"제인병원","t":"8:15","lat":37.549331,"lng":127.057014,"u":"https://map.naver.com/p/search/%EC%A0%9C%EC%9D%B8%EB%B3%91%EC%9B%90?c=15.00,0,0,0,dh9C%EC%9D%B8%EB%B3%91%EC%9B%90/place/12875547?c=15.30,0,0,0,dh&placePath=%3Fentry%3Dpll"},{"n":"뚝섬역 2번출구(상원어린이공원, 뚝섬중앙하이츠빌입구)","t":"8:19","lat":37.547328,"lng":127.047626,"u":"https://naver.me/GRmg6WqG"},{"n":"성동교남단 버스정류장(04185)","t":"8:20","lat":37.549368,"lng":127.043605,"u":"https://naver.me/Gctpz0Hg"}],"off":[{"n":"KB국민은행 서울숲지점","t":["2:00","3:40","2:50"],"lat":37.548735,"lng":127.044083,"u":"https://naver.me/5Fm1ue8X"},{"n":"뚝섬역 8번출구","t":["2:05","3:45","2:57"],"lat":37.548735,"lng":127.044083,"u":"https://naver.me/5Fm1ue8X"},{"n":"성수동 그레이닷(GREY.)","t":["2:12","3:50","3:02"],"lat":37.549443,"lng":127.05564,"u":"https://naver.me/xxxeVfix"},{"n":"우리은행 화양동지점","t":["2:20","3:52","3:04"],"lat":37.547941,"lng":127.065776,"u":"https://naver.me/II1SovpH"},{"n":"e편한세상광진그랜드파크입구","t":["2:23","3:55","3:08"],"lat":37.545012,"lng":127.08014,"u":"https://naver.me/F5L63v88"},{"n":"서울광진경찰서(재태크공인중개사 앞)","t":["2:25","3:57","3:11"],"lat":37.543133,"lng":127.084302,"u":"https://naver.me/GOQXZgCJ"},{"n":"광진구청 잎 버스정류장(05175)","t":["2:27","3:59","3:12"],"lat":37.539674,"lng":127.079537,"u":"https://naver.me/GG72P7ZP"},{"n":"잠실중학교, 삼성SDS 앞 버스정류장(24131)","t":["2:30","4:06","3:20"],"lat":37.516634,"lng":127.095941,"u":"https://naver.me/xXE53KlU"},{"n":"잠실 래미안아이파크 주출입구","t":["2:33","4:09","3:25"],"lat":37.519692,"lng":127.112136,"u":"https://naver.me/5iTwRZsf"}]},"3코스":{"on":[{"n":"잠실리센츠아파트 동문","t":"7:50","lat":37.514412,"lng":127.091376,"u":"https://naver.me/xkxhviEP"},{"n":"서울송파경찰서 교통정보센터","t":"7:54","lat":37.510645,"lng":127.092713,"u":"https://naver.me/FWJ6ZTpY"},{"n":"잠실트리지움 동문 앞 버스정류장(24150)","t":"7:55","lat":37.509313,"lng":127.091529,"u":"https://naver.me/FLhPY0Ot"},{"n":"아시아선수촌아파트(스타벅스 잠실본동점)","t":"8:02","lat":37.508645,"lng":127.079491,"u":"https://map.naver.com/p/entry/place/1637556489?lng=127.079491&lat=37.5086445&placePath=%2F&entry=plt&searchType=place&c=15.00,0,0,0,dh"},{"n":"종합운동장역 6번출구(잠실종합운동장남문 앞)","t":"8:05","lat":37.511361,"lng":127.073593,"u":"https://map.naver.com/p/entry/place/18847214?c=16.33,0,0,0,dh"}],"off":[{"n":"잠실리센츠아파트 동문","t":["2:09","3:50","3:03"],"lat":37.514412,"lng":127.091376,"u":"https://naver.me/xkxhviEP"},{"n":"서울송파경찰서 교통정보센터","t":["2:10","3:52","3:06"],"lat":37.510645,"lng":127.092713,"u":"https://naver.me/FWJ6ZTpY"},{"n":"잠실트리지움 동문 앞 버스정류장(24150)","t":["2:12","3:54","3:09"],"lat":37.509313,"lng":127.091529,"u":"https://naver.me/FLhPY0Ot"},{"n":"아시아선수촌아파트(부산은행 잠실지점 앞)","t":["2:19","4:02","3:15"],"lat":37.509841,"lng":127.079042,"u":"https://naver.me/FCbrPOmt","est":1},{"n":"종합운동장역 6번출구(잠실종합운동장남문 앞)","t":["2:24","4:07","3:18"],"lat":37.511361,"lng":127.073593,"u":"https://naver.me/Gjdv4G3P"}]},"4코스":{"on":[{"n":"대치현대아파트(현대옥 앞)","t":"7:54","lat":37.501165,"lng":127.059963,"u":"https://naver.me/501eGEgV"},{"n":"대치포스코더샵아파트(신학철피부과 앞)","t":"8:01","lat":37.504433,"lng":127.05825,"u":"https://naver.me/xQO8Ct7q"},{"n":"영동농협 삼성로지점(아이갤러리 안경원 앞)","t":"8:07","lat":37.515633,"lng":127.052239,"u":"https://naver.me/Fa3OxMSB"},{"n":"청담동성당(세라젬 앞)","t":"8:09","lat":37.520542,"lng":127.049622,"u":"https://naver.me/IG6GmIkG"},{"n":"압구정한양5차아파트정문(52동 앞)","t":"8:13","lat":37.528792,"lng":127.041236,"u":"https://naver.me/GDNDgSDJ"},{"n":"청담시티빌라트, 목화아파트","t":"8:16","lat":37.528279,"lng":127.049677,"u":"https://naver.me/5wWKo20r"}],"off":[{"n":"압구정한양5차아파트정문(52동 앞)","t":["2:10","3:50","2:59"],"lat":37.528792,"lng":127.041236,"u":"https://naver.me/GDNDgSDJ"},{"n":"청담시티빌라트, 목화아파트","t":["2:13","3:53","3:01"],"lat":37.528279,"lng":127.049677,"u":"https://naver.me/5wWKo20r"},{"n":"청담동성당 맞은편(해리슨테일러 앞)","t":["2:20","4:04","3:08"],"lat":37.519992,"lng":127.049285,"u":"https://naver.me/F9QpB7cD"},{"n":"래미안라클래시(노브랜드 강남삼성점 앞)","t":["2:23","4:08","3:11"],"lat":37.516302,"lng":127.051176,"u":"https://naver.me/xRQgKQUz"},{"n":"대치포스코더샵아파트(파파존스 앞)","t":["2:28","4:16","3:16"],"lat":37.504068,"lng":127.057881,"u":"https://naver.me/xZGH0eMr"},{"n":"대치현대아파트 맞은편(GS칼텍스 앞)","t":["2:30","4:19","3:18"],"lat":37.501445,"lng":127.059088,"u":"https://naver.me/5jAZ4osM"}]},"5코스":{"on":[{"n":"삼성타워팰리스2차GATE3주차장입구","t":"7:54","lat":37.489434,"lng":127.054902,"u":"https://naver.me/xGbBNhh0"},{"n":"대림아크로빌","t":"7:56","lat":37.487871,"lng":127.051611,"u":"https://naver.me/Fl2sjaSM"},{"n":"역삼중학교후문","t":"8:09","lat":37.495452,"lng":127.049726,"u":"https://naver.me/xVAVvXUj"}],"off":[{"n":"래미안도곡카운티아파트(101동 앞 택시정류장)","t":["2:24","4:08","3:13"],"lat":37.494654,"lng":127.048948,"u":"https://naver.me/xBskcN97"},{"n":"삼성타워팰리스2차GATE3주차장입구","t":["2:28","4:14","3:26"],"lat":37.489434,"lng":127.054902,"u":"https://naver.me/xGbBNhh0"},{"n":"대림아크로빌","t":["2:29","4:16","3:27"],"lat":37.487871,"lng":127.051611,"u":"https://naver.me/Fl2sjaSM"}]},"6코스":{"on":[{"n":"래미안그레이튼2차아파트 입구","t":"8:06","lat":37.495438,"lng":127.046462,"u":"https://naver.me/x67OOg99"},{"n":"역삼현대아이파크아파트 입구","t":"8:10","lat":37.49922,"lng":127.044654,"u":"https://naver.me/5EUccPv3"},{"n":"도곡지구대","t":"8:12","lat":37.501311,"lng":127.043718,"u":"https://naver.me/FlJT6Ru3"},{"n":"논현동부센트레빌아파트(가나돈까스 앞)","t":"8:15","lat":37.509856,"lng":127.037829,"u":"https://naver.me/5NdqAmfK"},{"n":"논현로얄팰리스 입구(어반라이트 빌딩 앞)","t":"8:17","lat":37.512663,"lng":127.035777,"u":"https://naver.me/Ffezz4nG"},{"n":"동현아파트(두산빌딩 앞)","t":"8:19","lat":37.518986,"lng":127.03524,"u":"https://naver.me/FkjSW8zB"},{"n":"압구정하이츠파크 후문(금수복국 맞은편)","t":"8:21","lat":37.524133,"lng":127.033908,"u":"https://naver.me/xiqTjVhC"}],"off":[{"n":"압구정하이츠파크(금수복국 앞)","t":["2:07","3:47","3:01"],"lat":37.523558,"lng":127.032787,"u":"https://naver.me/5rsMeH9Q"},{"n":"서울본부세관 입구","t":["2:10","3:51","3:03"],"lat":37.518237,"lng":127.035023,"u":"https://naver.me/G4WssrcI"},{"n":"강남지인병원","t":["2:13","3:53","3:07"],"lat":37.5128,"lng":127.035127,"u":"https://naver.me/xZDOPHGS"},{"n":"KB국민은행 논현동지점","t":["2:16","3:56","3:10"],"lat":37.50909,"lng":127.03743,"u":"https://naver.me/GttzrcqY"},{"n":"역삼자이아파트 맞은편(투썸플레이스 역삼자이점 앞)","t":["2:20","4:00","3:13"],"lat":37.500326,"lng":127.04357,"u":"https://naver.me/FKxYzR1J"},{"n":"신한아트홀(아세아공인중개사 앞)","t":["2:23","4:02","3:16"],"lat":37.499178,"lng":127.044095,"u":"https://naver.me/5h3btqFC"},{"n":"래미안그레이튼2차아파트 맞은편(등대꽃화원 앞)","t":["2:26","4:04","3:21"],"lat":37.495643,"lng":127.045742,"u":"https://naver.me/xcKTD35M"}]},"7코스":{"on":[{"n":"반포종합사회복지관 주차장입구","t":"7:59","lat":37.509791,"lng":127.010957,"u":"https://naver.me/xMnSTOrF"},{"n":"잠원한신아파트 정문(하나유치원 앞)","t":"8:02","lat":37.515191,"lng":127.010326,"u":"https://naver.me/xrPSxrbP"},{"n":"세븐일레븐 잠원점","t":"8:07","lat":37.5199,"lng":127.014471,"u":"https://naver.me/x1enujot"}],"off":[{"n":"잠원롯데캐슬아파트 정문 맞은편(사평리공원)","t":["2:10","3:50","3:05"],"lat":37.52041,"lng":127.015557,"u":"https://naver.me/G65vgnib"},{"n":"반포종합사회복지관 주차장입구","t":["2:15","3:56","3:11"],"lat":37.509791,"lng":127.010957,"u":"https://naver.me/xMnSTOrF"},{"n":"잠원한신아파트 정문(하나유치원 앞)","t":["2:24","4:04","3:18"],"lat":37.515191,"lng":127.010326,"u":"https://naver.me/xrPSxrbP"}]},"8코스":{"on":[{"n":"행당대림아파트 후문(행복한교회 앞)","t":"8:10","lat":37.557451,"lng":127.024879,"u":"https://naver.me/GsTo75D9"},{"n":"왕십리풍림아이원 115동 앞 버스정류장(04276)","t":"8:12","lat":37.55907,"lng":127.019725,"u":"https://naver.me/FcuAEL2K"},{"n":"왕십리자이아파트(왕도교회 앞)","t":"8:13","lat":37.560062,"lng":127.02408,"u":"https://naver.me/Forcul81"},{"n":"왕십리뉴타운아파트3주차장입구(센트라스126동 앞)","t":"8:22","lat":37.567307,"lng":127.026445,"u":"https://naver.me/GXkTr6PF"}],"off":[{"n":"왕십리뉴타운텐즈힐1단지(GS편의점 앞)","t":["2:03","3:43","2:54"],"lat":37.568846,"lng":127.024402,"u":"https://naver.me/5VThzH95","est":1},{"n":"왕십리자이, 신당현대아파트 버스정류장(04289)","t":["2:08","3:48","2:58"],"lat":37.560781,"lng":127.019495,"u":"https://naver.me/Ftu4Jqut"},{"n":"극동, 풍림아이원 버스정류장(04658)","t":["2:09","3:49","2:59"],"lat":37.559053,"lng":127.019461,"u":"https://naver.me/xguFI3xq"},{"n":"행복한교회 맞은편 버스정류장(04669)","t":["2:10","3:50","3:00"],"lat":37.557444,"lng":127.02379,"u":"https://naver.me/5ui8H2nv"}]},"9코스":{"on":[{"n":"한남더힐아파트 119동 앞 공항버스정류장(03749)","t":"8:00","lat":37.536262,"lng":127.007174,"u":"https://naver.me/GTePXkJM"},{"n":"한남하이츠아파트 앞 버스정류장(04527)","t":"8:05","lat":37.540265,"lng":127.011594,"u":"https://naver.me/5MS0yYNi"},{"n":"옥수극동아파트(블루클럽 앞)","t":"8:06","lat":37.5426,"lng":127.012525,"u":"https://naver.me/xDsdxWYu"},{"n":"옥수리버젠아파트, 건강미소약국 앞 버스정류장(04805)","t":"8:08","lat":37.543856,"lng":127.015136,"u":"https://naver.me/FC4aEf7i"},{"n":"금호동대우아파트 상가앞 공항버스정류장(04786)","t":"8:11","lat":37.546471,"lng":127.014706,"u":"https://naver.me/xdfgXhNp"},{"n":"응봉현대아파트 앞 공항버스정류장(04792)","t":"8:14","lat":37.549805,"lng":127.026503,"u":"https://naver.me/FkjSGHmt"},{"n":"응봉동주민센터","t":"8:15","lat":37.553164,"lng":127.033436,"u":"https://naver.me/G8UsKEr8"},{"n":"대림강변타운아파트입구","t":"8:16","lat":37.554772,"lng":127.035709,"u":"https://naver.me/5EWBQYUX"}],"off":[{"n":"서울숲한신더휴아파트 정문 앞 버스정류장(04250)","t":["2:00","3:40","2:50"],"lat":37.554692,"lng":127.034349,"u":"https://naver.me/FBJjVP6F"},{"n":"응봉대림2차아파트 정문 앞 공항버스정류장(04795)","t":["2:01","3:41","2:51"],"lat":37.553988,"lng":127.029376,"u":"https://naver.me/xGmpLJNW"},{"n":"응봉현대아파트(MG새마을금고 응봉지점 앞)","t":["2:02","3:42","2:52"],"lat":37.551045,"lng":127.031034,"u":"https://naver.me/56Yfu5Mn","est":1},{"n":"금옥초등학교 앞 공항버스정류장(04787)","t":["2:05","3:47","2:57"],"lat":37.546597,"lng":127.018732,"u":"https://naver.me/FTqhtBaS"},{"n":"래미안옥수리버젠아파트(리버젠힐부동산 앞)","t":["2:07","3:49","2:59"],"lat":37.544346,"lng":127.015402,"u":"https://naver.me/FrKgpKph"},{"n":"옥수극동아파트(KB국민은행 옥수동지점 앞)","t":["2:09","3:51","3:01"],"lat":37.542611,"lng":127.011997,"u":"https://naver.me/x8lOR99Z"},{"n":"극동그린아파트 앞 공항버스정류장(04783)","t":["2:10","3:53","3:03"],"lat":37.540962,"lng":127.006821,"u":"https://naver.me/5HtfKVSu"},{"n":"한남더힐아파트 119동 앞 공항버스정류장(03749)","t":["2:13","3:57","3:07"],"lat":37.536262,"lng":127.007174,"u":"https://naver.me/GTePXkJM"}]},"10코스":{"on":[{"n":"대치동부센트레빌아파트(대도초등학교후문 맞은편)","t":"7:58","lat":37.492795,"lng":127.054691,"u":"https://naver.me/5duHn91X"},{"n":"대치아이파크아파트 정문","t":"8:00","lat":37.4951,"lng":127.053684,"u":"https://naver.me/GsTIfKrh"},{"n":"남서울상가","t":"8:04","lat":37.499024,"lng":127.051876,"u":"https://naver.me/5GyajpwO"},{"n":"강남더드림병원 앞 버스정류장(23883)","t":"8:06","lat":37.50097,"lng":127.046673,"u":"https://naver.me/GnvLZ0Xo"},{"n":"영동고등학교 정문","t":"8:17","lat":37.520822,"lng":127.040131,"u":"https://naver.me/FgHClFic"},{"n":"압구정파출소","t":"8:21","lat":37.529316,"lng":127.035617,"u":"https://naver.me/FArRMJFH"}],"off":[{"n":"압구정파출소 맞은편(GS더프레시 앞)","t":["2:07","3:49","2:58"],"lat":37.528829,"lng":127.035538,"u":"https://naver.me/xXDKEqpt"},{"n":"영동고등학교 정문 맞은편","t":["2:14","3:54","3:06"],"lat":37.520647,"lng":127.039772,"u":"https://naver.me/FXZbcH06"},{"n":"역삼e-편한세상아파트 앞 버스정류장(23308)","t":["2:29","4:10","3:23"],"lat":37.499313,"lng":127.047121,"u":"https://naver.me/GKxX8H2k"},{"n":"도곡렉슬아파트(도곡렉슬유치원 앞)","t":["2:35","4:16","3:29"],"lat":37.4945,"lng":127.053532,"u":"https://naver.me/GyLooVNv"},{"n":"대도초등학교 후문","t":["2:37","4:18","3:31"],"lat":37.493268,"lng":127.054146,"u":"https://naver.me/xwmiUDuy"}]},"11코스":{"on":[{"n":"은마아파트 18동 맞은편(라화쿵부 앞)","t":"7:53","lat":37.497362,"lng":127.061442,"u":"https://naver.me/G6DOSER8"},{"n":"대곡초등학교 정문(신한은행 대치역지점 앞)","t":"7:58","lat":37.495051,"lng":127.065714,"u":"https://naver.me/FHY1eOMk"},{"n":"대치쌍용1차아파트 정문","t":"8:01","lat":37.497833,"lng":127.069637,"u":"https://naver.me/GdVsbXtV"},{"n":"주식회사오뚜기 앞 버스정류장(23511)","t":"8:03","lat":37.501942,"lng":127.063187,"u":"https://naver.me/xlCcoN8j"}],"off":[{"n":"BMW삼성전시장 앞 버스정류장(23857)","t":["2:23","4:06","3:16"],"lat":37.501778,"lng":127.062438,"u":"https://naver.me/FvFA3RuW"},{"n":"은마아파트 8동(스타벅스 학여울역점 앞)","t":["2:25","4:08","3:18"],"lat":37.498036,"lng":127.068494,"u":"https://naver.me/GbEcFlU1"},{"n":"은마아파드 2동 앞 버스정류장(23237)","t":["2:28","4:11","3:21"],"lat":37.495744,"lng":127.067205,"u":"https://naver.me/5c2XoNdn"},{"n":"은마아파트 서문(19동 앞)","t":["2:30","4:13","3:23"],"lat":37.497018,"lng":127.062156,"u":"https://naver.me/5AqtfhoH"}]},"12코스":{"on":[{"n":"맘스터치 삼성중앙점 앞 버스정류장(23210)","t":"7:58","lat":37.512762,"lng":127.051488,"u":"https://naver.me/F8Kus7eQ"},{"n":"강남구보건소(뚜레쥬르 앞)","t":"8:04","lat":37.515803,"lng":127.042038,"u":"https://naver.me/GSiH7qL8"},{"n":"석탑아파트(하나로마트 청담점 맞은편)","t":"8:08","lat":37.517529,"lng":127.044383,"u":"https://naver.me/59eJJuMq"},{"n":"청담삼성진흥아파트 상가(귀신반점 앞)","t":"8:11","lat":37.519126,"lng":127.052914,"u":"https://naver.me/xPIpAvSu"},{"n":"청담 제일정형외과병원","t":"8:14","lat":37.522822,"lng":127.056079,"u":"https://naver.me/IxD7vvUb"}],"off":[{"n":"우리은행 청담중앙지점","t":["2:12","3:55","3:07"],"lat":37.523145,"lng":127.054809,"u":"https://naver.me/5lZfdQV9"},{"n":"청담삼성진흥아파트(우리생협 오아시스 앞)","t":["2:15","3:59","3:12"],"lat":37.519482,"lng":127.052686,"u":"https://naver.me/x0GkHyUG"},{"n":"하나로마트 농협청담점","t":["2:20","4:03","3:16"],"lat":37.518068,"lng":127.044616,"u":"https://naver.me/GsTjyZ5V"},{"n":"강남구보건소 맞은편(맥도날드 앞)","t":["2:22","4:05","3:18"],"lat":37.516289,"lng":127.041407,"u":"https://naver.me/5BvimcrS"},{"n":"쌍용플래티넘아파트(삼성피트니스클럽 앞)","t":["2:29","4:12","3:26"],"lat":37.512256,"lng":127.051478,"u":"https://naver.me/xAtWhen9"}]},"13코스":{"on":[{"n":"압구정신현대아파트 116동 입구","t":"8:07","lat":37.529894,"lng":127.023711,"u":"https://naver.me/GtUmhnOx"},{"n":"압구정신현대아파트 113동 입구","t":"8:08","lat":37.52789,"lng":127.022238,"u":"https://naver.me/Gz5jQyQl"},{"n":"신사중학교(미성1차아파트 후문)","t":"8:10","lat":37.525152,"lng":127.021487,"u":"https://naver.me/5huVxbto"},{"n":"압구정현대아파트 80동 입구","t":"8:13","lat":37.528286,"lng":127.028435,"u":"https://naver.me/F7yvBohs"},{"n":"압구정현대아파트 75동 입구","t":"8:14","lat":37.530419,"lng":127.02784,"u":"https://naver.me/xwmiUruX"},{"n":"압구정현대5차아파트 정문","t":"8:16","lat":37.531839,"lng":127.02746,"u":"https://naver.me/xtgXOIa5"}],"off":[{"n":"압구정현대아파트 84동 앞 버스정류장(23148)","t":["2:08","3:52","3:02"],"lat":37.528458,"lng":127.026349,"u":"https://naver.me/GudI5RFR"},{"n":"압구정현대아파트 80동 입구","t":["2:09","3:56","3:04"],"lat":37.528286,"lng":127.028435,"u":"https://naver.me/F7yvBohs"},{"n":"압구정현대아파트 75동 입구","t":["2:10","3:57","3:05"],"lat":37.530419,"lng":127.02784,"u":"https://naver.me/xwmiUruX"},{"n":"압구정현대5차아파트 정문","t":["2:12","3:58","3:07"],"lat":37.531839,"lng":127.02746,"u":"https://naver.me/xtgXOIa5"},{"n":"압구정신현대아파트 116동 입구","t":["2:15","4:01","3:10"],"lat":37.529894,"lng":127.023711,"u":"https://naver.me/GtUmhnOx"},{"n":"압구정신현대아파트 113동 입구","t":["2:16","4:02","3:11"],"lat":37.52789,"lng":127.022238,"u":"https://naver.me/Gz5jQyQl"},{"n":"신사중학교(미성1차아파트 후문)","t":["2:18","4:04","3:13"],"lat":37.525152,"lng":127.021487,"u":"https://naver.me/5huVxbto"}]},"14코스":{"on":[{"n":"서울숲푸르지오아파트 마을버스정류장(04848)","t":"8:05","lat":37.545078,"lng":127.019423,"u":"https://naver.me/xHDM53GO"},{"n":"힐스테이트서울숲리버 버스정류장(04517)","t":"8:08","lat":37.54674,"lng":127.021292,"u":"https://naver.me/xNmZkbcs"},{"n":"금호 삼성래미안(새마을금고 성동중앙)","t":"8:14","lat":37.551458,"lng":127.025809,"u":"https://map.naver.com/p/entry/place/1443810266?c=17.79,0,0,0,dh"},{"n":"논골사거리 버스정류장(04554)","t":"8:16","lat":37.555351,"lng":127.020721,"u":"https://naver.me/FvFroh2L"},{"n":"한양대학교 앞, 한양시장 버스정류장(04127)","t":"8:23","lat":37.558177,"lng":127.040338,"u":"https://naver.me/5DZgwsx4"}],"off":[{"n":"서울숲 더샆 아파트 건너편(횡단보도)","t":["1:58","3:38","2:48"],"lat":37.556807,"lng":127.041002,"u":"https://naver.me/xxodrHIV"},{"n":"e편한세상 114동 앞 버스정류장(04591)","t":["2:05","3:45","2:55"],"lat":37.555231,"lng":127.020439,"u":"https://naver.me/xuiKzryE"},{"n":"래미안금호하이리버 버스정류장(04150)","t":["2:07","3:47","2:57"],"lat":37.551478,"lng":127.024889,"u":"https://naver.me/5c2OSz9x"},{"n":"GS주유소 앞 버스정류장(04697)","t":["2:10","3:50","3:00"],"lat":37.546981,"lng":127.025293,"u":"https://naver.me/FDjC4ETJ"},{"n":"서울숲푸르지오아파트 마을버스정류장(04848)","t":["2:12","3:52","3:02"],"lat":37.545078,"lng":127.019423,"u":"https://naver.me/xHDM53GO"}]},"15코스":{"on":[{"n":"신천중학교(잠실엘스아파트 147동 앞)","t":"7:49","lat":37.516301,"lng":127.079469,"u":"https://naver.me/FqWAQhuW"},{"n":"잠실엘스아파트 145동 앞","t":"7:50","lat":37.516163,"lng":127.081356,"u":"https://naver.me/FxF6WYVo"},{"n":"잠실리센츠아파트 북1문","t":"7:52","lat":37.516221,"lng":127.085263,"u":"https://naver.me/5r90IgS3"},{"n":"봉은사역 3번출구 앞 버스정류장(23192)","t":"8:09","lat":37.51538,"lng":127.051818,"u":"https://naver.me/G1wNOht5"},{"n":"삼성동 현대아이파크아파트 입구","t":"8:11","lat":37.518698,"lng":127.058233,"u":"https://naver.me/xk1GXTL3"}],"off":[{"n":"대신증권 청담WM센터 앞 버스정류장(23170)","t":["2:12","3:50","3:03"],"lat":37.520664,"lng":127.055465,"u":"https://naver.me/xMjftl57"},{"n":"봉은사역 5번출구","t":["2:19","3:57","3:10"],"lat":37.514227,"lng":127.061062,"u":"https://naver.me/xuc1SZWo"},{"n":"신천중학교(잠실엘스아파트 147동 앞)","t":["2:27","4:03","3:16"],"lat":37.516301,"lng":127.079469,"u":"https://naver.me/FqWAQhuW"},{"n":"잠실엘스아파트 145동","t":["2:28","4:04","3:17"],"lat":37.516163,"lng":127.081356,"u":"https://naver.me/FxF6WYVo"},{"n":"잠실리센츠아파트 북1문","t":["2:30","4:06","3:19"],"lat":37.516221,"lng":127.085263,"u":"https://naver.me/5r90IgS3"}]}}};
+const COLORS = ["#e8395f","#2f6fde","#16a34a","#f08c00","#8b5cf6","#0891b2","#db2777","#65a30d","#b45309","#4f46e5","#0d9488","#dc2626","#7c3aed","#ca8a04","#475569"];
+const SLOTS = ["1차","2차","월수금"];
+const NOTES = {
+ "off|2코스|2":"학교 사이트에서 앞 정류장(KB국민은행 서울숲지점)과 같은 지도 링크를 쓰고 있어 위치가 겹칩니다",
+ "off|1코스|4":"네이버 장소 좌표를 못 읽어 성원중학교 위치로 표시",
+ "off|3코스|4":"네이버 장소 좌표를 못 읽어 아시아선수촌아파트 위치로 표시",
+ "off|8코스|1":"네이버 장소 좌표를 못 읽어 텐즈힐 위치로 표시",
+ "off|9코스|3":"네이버 장소 좌표를 못 읽어 응봉현대아파트 위치로 표시"
+};
+const courses = Object.keys(DATA.courses);
+const COLOR = Object.fromEntries(courses.map((c,i)=>[c,COLORS[i%COLORS.length]]));
+let mode = "on", slot = 0;
+
+const map = L.map("map").setView(DATA.school,13);
+// OSM tiles need a Referer: open this page over http(s), not as a local file (file://).
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,referrerPolicy:"strict-origin-when-cross-origin",attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'}).addTo(map);
+if (location.protocol === "file:") document.addEventListener("DOMContentLoaded",()=>{
+  const n=document.createElement("div"); n.textContent="로컬 파일로 열면 OSM 지도 배경이 차단됩니다. 웹서버(http://localhost 등)로 열어 주세요.";
+  n.style.cssText="position:absolute;z-index:1000;left:50%;top:12px;transform:translateX(-50%);background:#fff;border:1px solid #e4e4ea;border-radius:8px;padding:6px 10px;font-size:12px;box-shadow:0 1px 4px rgba(0,0,0,.15)";
+  document.querySelector(".mapwrap").style.position="relative"; document.querySelector(".mapwrap").appendChild(n); });
+L.marker(DATA.school,{icon:L.divIcon({className:"",html:'<span class="schoolpin">한양초등학교</span>',iconSize:[0,0]}),zIndexOffset:1000}).addTo(map);
+
+const esc = t=>String(t).replace(/[&<>"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+const stops = c=>DATA.courses[c][mode];
+const timeOf = s=>mode==="on" ? s.t : s.t[slot];
+const timeLabel = s=>mode==="on" ? `${s.t} 승차` : `오후 ${s.t[slot]} 하차 (${SLOTS[slot]})`;
+const key = (c,no)=>`${mode}|${c}|${no}`;
+function pinIcon(c,s,no,hl){return L.divIcon({className:"",html:`<div class="pin ${s.est?"est":""} ${hl?"hl":""}" style="--c:${COLOR[c]}">${no}</div>`,iconSize:[22,22],iconAnchor:[11,11]});}
+function popup(c,s,no){const note=NOTES[key(c,no)];
+  const times = mode==="on" ? `${s.t} 승차` : SLOTS.map((l,i)=>`${l} ${s.t[i]}`).join(" · ");
+  return `<div class="pop"><b>${esc(s.n)}</b><div>${c} ${mode==="on"?"등교":"하교"} · ${no}번째</div><div>${times}</div>${note?`<div>${esc(note)}</div>`:""}<a href="${esc(s.u)}" target="_blank" rel="noopener">네이버 지도에서 보기 ↗</a></div>`;}
+
+let layers = {}, markers = {}, sel = new Set(courses), hlKey = null;
+function build(){
+  Object.values(layers).forEach(l=>map.removeLayer(l.g));
+  layers = {}; markers = {};
+  for (const c of courses){
+    const g = L.layerGroup(), list = stops(c), color = COLOR[c];
+    const pts = list.map(s=>[s.lat,s.lng]);
+    const line = L.polyline(pts,{color,weight:3.5,opacity:.85}).addTo(g);
+    const leg = mode==="on" ? [pts[pts.length-1],DATA.school] : [DATA.school,pts[0]];
+    L.polyline(leg,{color,weight:3,opacity:.55,dashArray:"4 7"}).addTo(g);
+    list.forEach((s,i)=>{ const no=i+1;
+      const m = L.marker([s.lat,s.lng],{icon:pinIcon(c,s,no,false),riseOnHover:true})
+        .bindTooltip(`${c} ${no}. ${s.n} · ${timeOf(s)}`,{direction:"top",offset:[0,-10]})
+        .bindPopup(popup(c,s,no)).addTo(g);
+      m.on("click",()=>{ if(!sel.has(c) || sel.size===courses.length || q.value){ sel=new Set([c]); q.value=""; update(false);} focusStop(c,no,false); });
+      markers[key(c,no)] = m;
+    });
+    line.on("click",()=>{sel=new Set([c]);q.value="";update(true);});
+    layers[c] = {g,line};
+  }
+}
+
+const elC = document.getElementById("courses"), elD = document.getElementById("detail"), q = document.getElementById("q");
+function renderCourses(){
+  elC.innerHTML = courses.map(c=>{const s=stops(c);
+    const sub = mode==="on" ? `${s.length}곳 · ${s[0].t}–${s[s.length-1].t}` : `${s.length}곳 · ${s[0].t[slot]} 첫 하차`;
+    return `<button class="cbtn" type="button" data-c="${c}" style="--c:${COLOR[c]}" aria-pressed="true"><span class="sw"></span><span><b>${c}</b><small>${sub}</small></span></button>`;}).join("");
+}
+elC.addEventListener("click",e=>{const b=e.target.closest("[data-c]");if(!b)return;const c=b.dataset.c;
+  const all = sel.size===courses.length;
+  if (e.ctrlKey||e.metaKey||e.shiftKey){ if(all) sel=new Set(); sel.has(c)?sel.delete(c):sel.add(c); if(!sel.size) sel=new Set(courses); }
+  else { sel = (sel.size===1&&sel.has(c)) ? new Set(courses) : new Set([c]); }
+  q.value=""; update(true);});
+document.getElementById("all").onclick=()=>{sel=new Set(courses);q.value="";update(true);};
+q.addEventListener("input",()=>update(true));
+document.querySelectorAll(".seg [data-m]").forEach(b=>b.onclick=()=>{ if(mode===b.dataset.m) return; mode=b.dataset.m; refreshMode(true); });
+document.querySelectorAll("#slot [data-s]").forEach(b=>b.onclick=()=>{ slot=+b.dataset.s; refreshMode(false); });
+
+function refreshMode(fit){
+  document.querySelectorAll(".seg [data-m]").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.m===mode)));
+  document.querySelectorAll("#slot [data-s]").forEach(b=>b.setAttribute("aria-pressed",String(+b.dataset.s===slot)));
+  document.getElementById("slot").hidden = mode!=="off";
+  document.getElementById("title").textContent = mode==="on" ? "등교노선" : "하교노선";
+  const n = courses.reduce((a,c)=>a+stops(c).length,0);
+  document.getElementById("sub").textContent = `한양초등학교 · ${courses.length}개 코스 · ${mode==="on"?"등교":"하교"} 정류장 ${n}곳`;
+  elD.classList.toggle("off", mode==="off");
+  build(); renderCourses(); update(fit);
+}
+
+function update(fit){
+  const all = sel.size===courses.length;
+  elC.classList.toggle("dimmed",!all);
+  elC.querySelectorAll("[data-c]").forEach(b=>b.setAttribute("aria-pressed",String(sel.has(b.dataset.c))));
+  const term = q.value.trim().replace(/\s+/g,"");
+  const hits = term ? courses.flatMap(c=>stops(c).map((s,i)=>({c,s,no:i+1})).filter(h=>h.s.n.replace(/\s+/g,"").includes(term))) : null;
+  const vis = hits ? new Set(hits.map(h=>h.c)) : sel;
+  for (const c of courses){
+    const on = vis.has(c);
+    if (on && !map.hasLayer(layers[c].g)) layers[c].g.addTo(map);
+    if (!on && map.hasLayer(layers[c].g)) map.removeLayer(layers[c].g);
+    layers[c].line.setStyle({weight:(!hits && !all) ? 5 : 3.5});
+  }
+  hlKey = null;
+  renderDetail(hits);
+  if (fit){
+    map.invalidateSize();
+    const b = L.latLngBounds([DATA.school,DATA.school]);
+    (hits && hits.length ? hits.map(h=>[h.s.lat,h.s.lng]) : [...vis].flatMap(c=>stops(c).map(s=>[s.lat,s.lng]))).forEach(p=>b.extend(p));
+    map.fitBounds(b,{padding:[40,40],maxZoom:15});
+  }
+}
+function timeCell(s){
+  if (mode==="on") return `<span class="tm">${s.t}</span>`;
+  return `<span class="tms">${s.t.map((t,i)=>`<span class="${i===slot?"cur":""}">${t}</span>`).join("")}</span>`;
+}
+function row(c,s,no,showCourse){const note=NOTES[key(c,no)];
+  return `<li data-k="${key(c,no)}" style="--c:${COLOR[c]}"><span class="num ${s.est?"est":""}">${no}</span><span class="nm">${esc(s.n)}${s.est?'<span class="tag">근사 위치</span>':""}${note&&!s.est?`<span class="warn" title="${esc(note)}">위치 확인</span>`:""}<a href="${esc(s.u)}" target="_blank" rel="noopener" title="네이버 지도에서 보기">지도↗</a>${showCourse?`<span class="cr">${c}</span>`:""}</span>${timeCell(s)}</li>`;}
+const colhead = ()=> mode==="off" ? `<div class="colhead"><span></span><span>정류장</span><span class="tms"><span>1차</span><span>2차</span><span>월수금</span></span></div>` : "";
+function renderDetail(hits){
+  if (hits){
+    elD.innerHTML = `<div class="dhead"><h2>“${esc(q.value.trim())}” 검색 결과</h2><span>${hits.length}곳</span></div>` +
+      (hits.length ? colhead()+`<ol class="stops">${hits.map(h=>row(h.c,h.s,h.no,true)).join("")}</ol>` : `<div class="empty">맞는 정류장이 없습니다.</div>`);
+    return;
+  }
+  if (sel.size===courses.length){
+    elD.innerHTML = `<div class="dhead"><h2>전체 코스</h2></div><div class="empty" style="padding-top:0">코스 버튼이나 지도 위 노선을 누르면 정류장 목록이 나옵니다. Ctrl(⌘)이나 Shift를 누른 채 누르면 여러 코스를 함께 볼 수 있습니다. 각 정류장의 ‘지도↗’는 학교가 올린 네이버 지도 위치를 엽니다.</div>`;
+    return;
+  }
+  elD.innerHTML = [...sel].map(c=>{const list=stops(c);
+    const school = t=>`<div class="school"><span class="num">학</span><span>한양초등학교 ${t}</span></div>`;
+    const head = mode==="on" ? `${list.length}곳 · ${list[0].t} 첫 승차` : `${list.length}곳 · 하교 시간은 오후`;
+    return `<div class="dhead"><h2 style="color:${COLOR[c]}">${c} ${mode==="on"?"등교":"하교"}</h2><span>${head}</span></div>
+    ${mode==="off"?school("출발"):""}${colhead()}<ol class="stops">${list.map((s,i)=>row(c,s,i+1,false)).join("")}</ol>${mode==="on"?school("도착"):""}`;}).join("");
+}
+elD.addEventListener("click",e=>{ if(e.target.closest("a")) return; const li=e.target.closest("[data-k]");if(!li)return;const [,c,no]=li.dataset.k.split("|");focusStop(c,+no,true);});
+elD.addEventListener("mouseover",e=>{const li=e.target.closest("[data-k]");if(li && li.dataset.k!==hlKey)highlight(li.dataset.k);});
+function highlight(k){
+  if (hlKey && markers[hlKey]){const [,c,no]=hlKey.split("|");markers[hlKey].setIcon(pinIcon(c,stops(c)[no-1],+no,false)).setZIndexOffset(0);}
+  hlKey=k;
+  if (k && markers[k]){const [,c,no]=k.split("|");markers[k].setIcon(pinIcon(c,stops(c)[no-1],+no,true)).setZIndexOffset(900);}
+  elD.querySelectorAll("li.on").forEach(x=>x.classList.remove("on"));
+  if (k){const li=elD.querySelector(`[data-k="${k}"]`); if(li) li.classList.add("on");}
+}
+function focusStop(c,no,pan){const k=key(c,no), m=markers[k]; highlight(k);
+  if (pan) map.setView(m.getLatLng(),Math.max(map.getZoom(),15));
+  m.openPopup();
+  const li=elD.querySelector(`[data-k="${k}"]`); if(li) li.scrollIntoView({block:"nearest"});}
+refreshMode(true);
+window.addEventListener("load",()=>update(true));
+new ResizeObserver(()=>map.invalidateSize()).observe(document.getElementById("map"));
+</script>
+</body>
+</html>
